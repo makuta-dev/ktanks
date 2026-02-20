@@ -13,6 +13,8 @@ The goal of this project is to master low-level game engine architecture, memory
 * **Windowing & Input:** SDL3
 * **OpenGL Loader:** GLAD
 * **Math Library:** GLM (OpenGL Mathematics)
+* **Logging Library:** spdlog
+* **Image Loader:** spng
 * **Assets:** Kenney.nl
 
 ## 🎮 Features
@@ -90,9 +92,9 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 
 ### 📦 Phase 1: Engine Foundation
 
-* [ ] **Window Context:** Initialize GLFW, GLAD, and the OpenGL 3.3 viewport.
+* [x] **Window Context:** Initialize SDL3, GLAD, and the OpenGL 3.3 viewport.
 * [ ] **Shader Wrapper:** Create a C++ class to compile and manage Vertex/Fragment shaders.
-* [ ] **Resource Loader:** Implement `stb_image` to load Kenney's sprites into OpenGL textures.
+* [ ] **Resource Loader:** Implement `spng` to load Kenney's sprites into OpenGL textures.
 * [ ] **Camera 2D:** Set up an Orthographic projection matrix via GLM.
 
 ### 🎨 Phase 2: Rendering & Entities
@@ -120,7 +122,7 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 
 ### 📈 Current Milestone
 
-**Status:** `Phase 1: Foundation`
+**Status:** `Phase 1: Foundation`  
 **Progress:** `[▓░░░░░░░░░] 10%`
 
 ## ⚖️ License & Credits
