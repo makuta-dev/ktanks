@@ -3,7 +3,6 @@
 
 namespace ktanks {
 
-    class Renderer;
     class Event;
 
     class Tanks final {
@@ -12,7 +11,7 @@ namespace ktanks {
         ~Tanks();
 
         void onUpdate(float dt);
-        void onDraw(Renderer&);
+        void onDraw();
         void onEvent(const Event&);
     };
 

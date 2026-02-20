@@ -160,5 +160,4 @@ namespace ktanks {
         return true;
     }
 
-
 }
