@@ -1,0 +1,2 @@
+libs/* linguist-vendored
+*.h linguist-language=cpp
