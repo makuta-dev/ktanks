@@ -19,6 +19,8 @@ namespace ktanks {
         Shader();
         ~Shader();
 
+        void use() const;
+
         Shader(const Shader&) = delete;
         Shader& operator=(const Shader&) = delete;
 

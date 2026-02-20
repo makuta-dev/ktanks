@@ -41,7 +41,7 @@ namespace ktanks {
         size_t out_size;
         spng_decoded_image_size(ctx, SPNG_FMT_RGBA8, &out_size);
         std::vector<unsigned char> data(out_size);
-        spng_decode_image(ctx, data.data(), out_size, SPNG_FMT_RGBA8, 0);
+        spng_decode_image(ctx, data.data(), out_size, SPNG_FMT_RGBA8,SPNG_DECODE_TRNS);
 
         spng_ihdr ihdr{};
         spng_get_ihdr(ctx, &ihdr);

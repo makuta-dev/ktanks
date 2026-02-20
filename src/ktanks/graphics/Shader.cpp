@@ -18,6 +18,10 @@ namespace ktanks {
         }
     }
 
+    void Shader::use() const {
+        glUseProgram(m_program);
+    }
+
     Shader::Shader(const uint32_t program) : m_program(program){}
 
     Shader::Shader(Shader&& other) noexcept : m_program(other.m_program) {

@@ -3,6 +3,8 @@
 #include <SDL3/SDL_init.h>
 #include <spdlog/spdlog.h>
 
+#include "glad/gl.h"
+
 namespace ktanks {
 
     Window::Window(const std::string& title, const glm::ivec2& size) {
@@ -26,6 +28,11 @@ namespace ktanks {
 
         SDL_GL_MakeCurrent(m_window, m_context);
         SDL_GL_SetSwapInterval(1);
+
+        if (!gladLoadGL(SDL_GL_GetProcAddress)) {
+            spdlog::error("Cannot load OpenGL functions: {}", glGetError());
+            return;
+        }
 
         m_running = true;
     }

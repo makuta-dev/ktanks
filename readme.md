@@ -14,7 +14,7 @@ The goal of this project is to master low-level game engine architecture, memory
 * **OpenGL Loader:** GLAD
 * **Math Library:** GLM (OpenGL Mathematics)
 * **Logging Library:** spdlog
-* **Image Loader:** spng
+* **Image Loader:** libspng
 * **Assets:** Kenney.nl
 
 ## 🎮 Features
@@ -124,7 +124,7 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 ### 📈 Current Milestone
 
 **Status:** `Phase 1: Foundation`  
-**Progress:** `[▓▓▓▓▓▓░░░░░░] 50%`
+**Progress:** `[▓▓▓▓▓▓▓░░░░░] 55%`
 
 <!-- ▓░ -->
 
