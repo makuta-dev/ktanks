@@ -1,17 +1,20 @@
-#include <SDL3/SDL_events.h>
+#include <SDL3/SDL_opengl.h>
+#include <spdlog/spdlog.h>
 
 #include "ktanks/window/Window.h"
 
 int main() {
     auto window = ktanks::Window("kTanks");
     while (window.isRunning()) {
-
-        SDL_Event event{};
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_EVENT_WINDOW_CLOSE_REQUESTED) {
+        ktanks::Event e{};
+        while (ktanks::popEvent(e)) {
+            if (e.type == ktanks::EventType::WindowClose) {
                 window.close();
             }
         }
+
+        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(1,1,1,1);
 
         window.swapBuffers();
     }

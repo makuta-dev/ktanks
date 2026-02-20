@@ -33,8 +33,9 @@ This project uses **CMake** for build management. Ensure you have a C++23 compat
 You will need the following libraries installed or available in your include path:
 
 * **SDL3** (Windowing and Input)
-* **GLAD** (OpenGL Loader - included in libs)
+* **OpenGL** (OpenGL implementation libs for your GPU)
 * **GLM** (OpenGL Mathematics)
+* **spdlog** (Logging library)
 
 ### 2. Compilation
 
@@ -83,10 +84,10 @@ To keep the repository clean, the project follows this standard layout:
 
 This project utilizes high-quality open-source assets by **Kenney**. These assets allow the focus to remain on the technical implementation of the engine.
 
-| Asset Pack | Category | License |
-| --- | --- | --- |
+| Asset Pack                                                            | Category        | License             |
+|-----------------------------------------------------------------------|-----------------|---------------------|
 | [Top-Down Tanks Redux](https://kenney.nl/assets/top-down-tanks-redux) | Sprites / Tanks | CC0 (Public Domain) |
-| [UI Pack](https://kenney.nl/assets/ui-pack) | Interface / HUD | CC0 (Public Domain) |
+| [UI Pack](https://kenney.nl/assets/ui-pack)                           | Interface / HUD | CC0 (Public Domain) |
 
 ## 🗺️ Project Roadmap
 
@@ -123,11 +124,11 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 ### 📈 Current Milestone
 
 **Status:** `Phase 1: Foundation`  
-**Progress:** `[▓░░░░░░░░░] 10%`
+**Progress:** `[▓▓░░░░░░░░] 20%`
 
 ## ⚖️ License & Credits
 
- Author: Maks Makuta  
- Year: 2026  
- Code: MIT License  
- Assets: CC0 by Kenney.nl
+**Author:** Maks Makuta  
+**Year:** 2026  
+**Code:** MIT License  
+**Assets:** CC0 by Kenney.nl

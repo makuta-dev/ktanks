@@ -18,6 +18,7 @@ add_executable(ktanks
         src/ktanks/Tanks.h
 
         src/main.cpp
+        src/ktanks/window/Event.h
 )
 
 target_include_directories(ktanks PRIVATE src)

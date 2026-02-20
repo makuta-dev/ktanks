@@ -101,4 +101,64 @@ namespace ktanks {
         }
     }
 
+    bool popEvent(Event& outEvent) {
+        SDL_Event sdlEvent;
+
+        if (!SDL_PollEvent(&sdlEvent)) {
+            return false;
+        }
+
+        switch (sdlEvent.type) {
+            case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
+                outEvent.type = EventType::WindowClose;
+                break;
+
+            case SDL_EVENT_WINDOW_RESIZED:
+                outEvent.type = EventType::WindowResize;
+                outEvent.onWResize = { sdlEvent.window.data1, sdlEvent.window.data2 };
+                break;
+
+            case SDL_EVENT_WINDOW_MOVED:
+                outEvent.type = EventType::WindowMove;
+                outEvent.onWMove = { sdlEvent.window.data1, sdlEvent.window.data2 };
+                break;
+
+            case SDL_EVENT_MOUSE_BUTTON_DOWN:
+            case SDL_EVENT_MOUSE_BUTTON_UP:
+                outEvent.type = EventType::MouseButton;
+                outEvent.onMButton = {
+                    sdlEvent.type == SDL_EVENT_MOUSE_BUTTON_DOWN,
+                    static_cast<int>(sdlEvent.button.button)
+                };
+                break;
+
+            case SDL_EVENT_MOUSE_MOTION:
+                outEvent.type = EventType::MouseMove;
+                outEvent.onMMove = { sdlEvent.motion.x, sdlEvent.motion.y };
+                break;
+
+            case SDL_EVENT_MOUSE_WHEEL:
+                outEvent.type = EventType::MouseWheel;
+                outEvent.onMWheel = { sdlEvent.wheel.x, sdlEvent.wheel.y };
+                break;
+
+            case SDL_EVENT_KEY_DOWN:
+            case SDL_EVENT_KEY_UP:
+                outEvent.type = EventType::Key;
+                outEvent.onKey = {
+                    sdlEvent.type == SDL_EVENT_KEY_DOWN,
+                    (sdlEvent.key.repeat),
+                    static_cast<int>(sdlEvent.key.scancode),
+                    static_cast<int>(sdlEvent.key.mod)
+                };
+                break;
+
+            default:
+                return popEvent(outEvent);
+        }
+
+        return true;
+    }
+
+
 }

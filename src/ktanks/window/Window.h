@@ -6,6 +6,8 @@
 
 #include <string>
 
+#include "Event.h"
+
 namespace ktanks {
 
     class Window final {
@@ -31,6 +33,8 @@ namespace ktanks {
         SDL_Window *m_window = nullptr;
         SDL_GLContext m_context = nullptr;
     };
+
+    bool popEvent(Event&);
 
 }
 
