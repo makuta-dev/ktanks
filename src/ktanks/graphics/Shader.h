@@ -43,7 +43,6 @@ namespace ktanks {
         std::unordered_map<std::string,int> uniforms;
     };
 
-
 }
 
 #endif //KTANKS_SHADER_H

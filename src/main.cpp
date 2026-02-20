@@ -1,7 +1,7 @@
 #include <chrono>
 
-#include "ktanks/Tanks.h"
 #include "ktanks/window/Window.h"
+#include "ktanks/Tanks.h"
 
 using hclock = std::chrono::steady_clock;
 

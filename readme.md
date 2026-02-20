@@ -72,7 +72,7 @@ After a successful build, the executable `kTanks` will be located in the `build/
 To keep the repository clean, the project follows this standard layout:
 
 ```text
-├── assets/             # Kenney.nl Sprites & UI
+├── assets/             # Sprites & UI
 ├── src/                # Source files (.cpp, .c, .h)
 ├── libs/               # Libraries sources
 ├── CMakeLists.txt      # Build configuration
