@@ -94,7 +94,7 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 ### 📦 Phase 1: Engine Foundation
 
 * [x] **Window Context:** Initialize SDL3, GLAD, and the OpenGL 3.3 viewport.
-* [ ] **Shader Wrapper:** Create a C++ class to compile and manage Vertex/Fragment shaders.
+* [x] **Shader Wrapper:** Create a C++ class to compile and manage Vertex/Fragment shaders.
 * [ ] **Resource Loader:** Implement `spng` to load Kenney's sprites into OpenGL textures.
 * [ ] **Camera 2D:** Set up an Orthographic projection matrix via GLM.
 
@@ -124,7 +124,9 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 ### 📈 Current Milestone
 
 **Status:** `Phase 1: Foundation`  
-**Progress:** `[▓▓░░░░░░░░] 20%`
+**Progress:** `[▓▓▓▓▓▓░░░░░░] 50%`
+
+<!-- ▓░ -->
 
 ## ⚖️ License & Credits
 
