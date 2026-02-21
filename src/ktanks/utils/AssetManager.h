@@ -1,8 +1,6 @@
 #ifndef KTANKS_ASSETMANAGER_H
 #define KTANKS_ASSETMANAGER_H
 
-#include <string>
-
 #include "ktanks/core/TankType.h"
 
 #include "ktanks/graphics/Font.h"
@@ -28,6 +26,5 @@ namespace ktanks {
     };
 
 }
-
 
 #endif //KTANKS_ASSETMANAGER_H

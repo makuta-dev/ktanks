@@ -106,6 +106,46 @@ namespace ktanks {
         m_indices.push_back(offset + 0);
     }
 
+    void Renderer::drawSprite(const glm::vec2& pos, const glm::vec2& size, float angle, const glm::vec2& center, const Region& region) {
+        const auto [a, b] = region;
+        const auto offset = static_cast<uint32_t>(m_vertices.size());
+
+        const auto origin = size * center;
+        const float s = std::sin(angle);
+        const float c = std::cos(angle);
+
+        const glm::vec2 corners[4] = {
+            { 0.0f,   0.0f },
+            { size.x, 0.0f },
+            { size.x, size.y },
+            { 0.0f,   size.y }
+        };
+
+        const glm::vec2 uv[4] = {
+            {a.x, a.y}, {b.x, a.y}, {b.x, b.y}, {a.x, b.y}
+        };
+
+        for (int i = 0; i < 4; i++) {
+            const float x = corners[i].x - origin.x;
+            const float y = corners[i].y - origin.y;
+
+            const float x_new = x * c - y * s;
+            const float y_new = x * s + y * c;
+
+            m_vertices.push_back({
+                { x_new + pos.x + center.x, y_new + pos.y + center.y },
+                uv[i]
+            });
+        }
+
+        m_indices.push_back(offset + 0);
+        m_indices.push_back(offset + 1);
+        m_indices.push_back(offset + 2);
+        m_indices.push_back(offset + 2);
+        m_indices.push_back(offset + 3);
+        m_indices.push_back(offset + 0);
+    }
+
     void Renderer::drawText(const std::string& text, const glm::vec2& pos, const glm::vec3& color, const Font& font) {
         setTexture(font.getTextureID(),true);
         m_shader.setVec3("text_col", color);

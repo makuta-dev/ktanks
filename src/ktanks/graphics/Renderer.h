@@ -21,6 +21,7 @@ namespace ktanks {
 
         void setTexture(uint32_t texture_id, bool is_text = false);
 
+        void drawSprite(const glm::vec2& pos, const glm::vec2& size, float angle, const glm::vec2& center,const Region&);
         void drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region&);
         void drawText(const std::string& text, const glm::vec2& pos, const glm::vec3& color, const Font& font);
 

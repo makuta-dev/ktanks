@@ -133,7 +133,7 @@ namespace ktanks {
                 name = "Green";
                 break;
             case TankType::Black:
-                name = "Black";
+                name = "Dark";
                 break;
             default: {
                 spdlog::error("Tank type {} not supported", static_cast<int>(t));

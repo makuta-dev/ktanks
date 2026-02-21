@@ -18,10 +18,11 @@ namespace ktanks {
     private:
         float lastFps = 0.0f;
         float fps{0.f};
+        float angle = 0.0f, angle2 = 0.0f;
 
+        Font font;
         glm::uvec2 view{0};
         TextureAtlas tank;
-        Font font;
     };
 
 }
