@@ -67,7 +67,7 @@ namespace ktanks {
         m_shader.setMat4("proj", m_projection);
 
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, m_terrain_atlas.getTextureID());
+        glBindTexture(GL_TEXTURE_2D, m_texture);
 
         glBindVertexArray(m_vao);
 
@@ -80,9 +80,20 @@ namespace ktanks {
         glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indices.size()), GL_UNSIGNED_INT, nullptr);
 
         glBindVertexArray(0);
+
+        m_vertices.clear();
+        m_indices.clear();
+    }
+
+    void Renderer::setTexture(const uint32_t texture_id) {
+        if (m_texture != texture_id) {
+            flush();
+        }
+        m_texture = texture_id;
     }
 
     void Renderer::drawTerrain(const glm::vec2& pos, const glm::vec2& size, TerrainSprite sprite) {
+        setTexture(m_terrain_atlas.getTextureID());
         auto regionOpt = m_terrain_atlas.at(static_cast<std::size_t>(sprite));
         if (!regionOpt) return;
 
@@ -93,6 +104,23 @@ namespace ktanks {
         m_vertices.push_back({{pos.x + size.x, pos.y},      {b.x, a.y}});
         m_vertices.push_back({{pos.x + size.x, pos.y + size.y}, {b.x, b.y}});
         m_vertices.push_back({{pos.x, pos.y + size.y},      {a.x, b.y}});
+
+        m_indices.push_back(offset + 0);
+        m_indices.push_back(offset + 1);
+        m_indices.push_back(offset + 2);
+        m_indices.push_back(offset + 2);
+        m_indices.push_back(offset + 3);
+        m_indices.push_back(offset + 0);
+    }
+
+    void Renderer::drawTexture(const glm::vec2& pos, const glm::vec2& size, uint32_t texture_id) {
+        setTexture(texture_id);
+        const auto offset = static_cast<uint32_t>(m_vertices.size());
+
+        m_vertices.push_back({{pos.x, pos.y},               {0, 0}});
+        m_vertices.push_back({{pos.x + size.x, pos.y},      {1, 0}});
+        m_vertices.push_back({{pos.x + size.x, pos.y + size.y}, {1, 1}});
+        m_vertices.push_back({{pos.x, pos.y + size.y},      {0, 1}});
 
         m_indices.push_back(offset + 0);
         m_indices.push_back(offset + 1);

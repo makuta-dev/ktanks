@@ -1,14 +1,15 @@
 #include "Tanks.h"
 
 #include "glad/gl.h"
-#include "window/Event.h"
+#include "utils/AssetManager.h"
 
 namespace ktanks {
 
     constexpr auto tile_size = glm::vec2(32);
 
-    Tanks::Tanks() {
-        glClearColor(1.f, 1.0f, 1.0f, 1.f);
+    Tanks::Tanks() : map(glm::uvec2{32}) {
+        glClearColor(0.f, 0.0f, 0.0f, 1.f);
+        tank = AssetManager().getTankAtlas(TankType::Black);
     }
 
     Tanks::~Tanks() = default;
@@ -18,8 +19,8 @@ namespace ktanks {
     }
 
     void Tanks::onDraw(Renderer& r) {
-        glClear(GL_COLOR_BUFFER_BIT);
-
+        map.draw(r,tile_size);
+        r.drawTexture({0,0},{128,128},tank.getTextureID());
     }
 
     void Tanks::onEvent(const Event& e) {

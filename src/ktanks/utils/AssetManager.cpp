@@ -1,25 +1,11 @@
 #include "AssetManager.h"
 
 #include <utility>
+#include <spdlog/spdlog.h>
 
 #include "spng.h"
 
 namespace ktanks {
-
-    AssetManager::AssetManager(std::string assets_root) : m_root(std::move(assets_root)) {}
-
-    Shader AssetManager::getShader(const std::string& name) const {
-        return Shader::fromName(m_root + "/shaders", name);
-    }
-
-    Texture AssetManager::getTexture(const std::string& name) const {
-        return Texture::loadFile(m_root + "/textures/" + name + ".png");
-    }
-
-    Font AssetManager::getFont(const std::string& name) {
-        //TODO(implement getFont(const std::string&))
-        return {};
-    }
 
     struct ImageData {
         std::vector<unsigned char> data;
@@ -29,7 +15,10 @@ namespace ktanks {
     ImageData loadImage(const std::string& path) {
         ImageData idata{};
         FILE* f = fopen(path.c_str(), "rb");
-        if (!f) return {};
+        if (!f) {
+            spdlog::error("Can't open image file: {}", path);
+            return {};
+        }
 
         spng_ctx* ctx = spng_ctx_new(0);
         spng_set_png_file(ctx, f);
@@ -48,6 +37,21 @@ namespace ktanks {
         spng_ctx_free(ctx);
         fclose(f);
         return idata;
+    }
+
+    AssetManager::AssetManager(std::string assets_root) : m_root(std::move(assets_root)) {}
+
+    Shader AssetManager::getShader(const std::string& name) const {
+        return Shader::fromName(m_root + "/shaders", name);
+    }
+
+    Texture AssetManager::getTexture(const std::string& name) const {
+        return Texture::loadFile(m_root + "/textures/" + name + ".png");
+    }
+
+    Font AssetManager::getFont(const std::string& name) {
+        //TODO(implement getFont(const std::string&))
+        return {};
     }
 
     TextureAtlas AssetManager::getTerrainAtlas() const {
@@ -114,6 +118,46 @@ namespace ktanks {
         insert("tileGrass_transitionW.png");
         insert("tileGrass_transitionE.png");
 
+        return atlas;
+    }
+
+    TextureAtlas AssetManager::getTankAtlas(TankType) const {
+        constexpr auto atlas_size = glm::uvec2(128);
+        TextureAtlas atlas(atlas_size);
+
+        auto pos = glm::uvec2(0);
+        uint32_t currentLineHeight = 0;
+
+        auto insert = [&](const std::string& path) {
+            const auto [pixels, size] = loadImage(path);
+
+            if (pos.x + size.x > atlas_size.x) {
+                pos.x = 0;
+                pos.y += currentLineHeight + 1;
+                currentLineHeight = 0;
+            }
+
+            if (pos.y + size.y > atlas_size.y) {
+                spdlog::error("Atlas full! Cannot insert {}", path);
+                return;
+            }
+
+            atlas.insert(pos, size, pixels.data());
+
+            if (size.y > currentLineHeight) {
+                currentLineHeight = size.y;
+            }
+
+            spdlog::info("Inserted {} at [{},{}] size [{},{}]", path, pos.x, pos.y, size.x, size.y);
+
+            pos.x += size.x + 1;
+        };
+
+        insert(m_root + "/textures/tankBody_blue.png");
+        insert(m_root + "/textures/tankBlue_barrel2.png");
+        insert(m_root + "/textures/bulletBlue1.png");
+        insert(m_root + "/textures/bulletBlue2.png");
+        insert(m_root + "/textures/bulletBlue3.png");
 
         return atlas;
     }

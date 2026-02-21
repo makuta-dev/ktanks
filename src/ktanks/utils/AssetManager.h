@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include "ktanks/core/TankType.h"
+
 #include "ktanks/graphics/Font.h"
 #include "ktanks/graphics/Shader.h"
 #include "ktanks/graphics/Texture.h"
@@ -19,6 +21,7 @@ namespace ktanks {
         Font getFont(const std::string& name);
 
         [[nodiscard]] TextureAtlas getTerrainAtlas() const;
+        [[nodiscard]] TextureAtlas getTankAtlas(TankType) const;
 
     private:
         std::string m_root;

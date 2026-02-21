@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-#include "ktanks/data/TerrainSpriteList.h"
+#include "sprite_data/TerrainSprites.h"
 
 #include "ktanks/graphics/Shader.h"
 #include "ktanks/graphics/TextureAtlas.h"
@@ -22,9 +22,11 @@ namespace ktanks {
         void endFrame();
 
         void drawTerrain(const glm::vec2& pos, const glm::vec2& size, TerrainSprite);
+        void drawTexture(const glm::vec2& pos, const glm::vec2& size, uint32_t texture_id);
 
     private:
         void flush();
+        void setTexture(uint32_t texture_id);
 
         uint32_t m_vao{0};
         uint32_t m_vbo{0};
