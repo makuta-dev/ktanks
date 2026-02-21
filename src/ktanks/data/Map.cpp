@@ -3,6 +3,8 @@
 #include <random>
 #include <spdlog/spdlog.h>
 
+#include "ktanks/graphics/sprite_data/TerrainSprites.h"
+
 namespace ktanks {
 
     Map::Map(const glm::uvec2& size) : m_size(size),
@@ -14,22 +16,12 @@ namespace ktanks {
 
         for(int x = 0; x < size.x; x++) {
             for(int y = 0; y < size.y; y++) {
-                if (dis(gen) < 0.45){
-                    set({x,y},TerrainSprite::Sand2);
+                if (dis(gen) < 0.33){
+                    set({x,y},TerrainSprite::Grass2);
                 }
-            }
-        }
-
-    }
-
-    void Map::draw(Renderer &r, const glm::vec2& sprite_size) const {
-        auto pos = glm::uvec2(0);
-        for (const auto& sprite : data) {
-            r.drawTerrain(glm::vec2(pos) * sprite_size,sprite_size, sprite);
-            pos.x++;
-            if (pos.x >= m_size.x) {
-                pos.x = 0;
-                pos.y++;
+                if (dis(gen) >= 0.33 && dis(gen) < 0.66) {
+                    set({x,y},TerrainSprite::Grass2);
+                }
             }
         }
     }
@@ -52,12 +44,6 @@ namespace ktanks {
 
     std::size_t Map::getIndex(const glm::uvec2 &pos) const {
         return pos.x * m_size.x + pos.y;
-    }
-
-    Map Map::load(const std::string &path) {
-        spdlog::warn("loading maps is not implemented yet");
-        //TODO(implement loading maps from files)
-        return Map({0,0});
     }
 
 }

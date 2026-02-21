@@ -15,7 +15,18 @@ add_subdirectory(libs/glad)
 add_subdirectory(libs/libspng)
 
 add_executable(kTanks
-        src/ktanks/data/TerrainSpriteList.h
+        src/ktanks/core/IObject.h
+        src/ktanks/core/IEntity.h
+        src/ktanks/core/TankType.h
+
+        src/ktanks/data/Map.cpp
+        src/ktanks/data/Map.h
+
+        src/ktanks/entity/Player.cpp
+        src/ktanks/entity/Player.h
+
+        src/ktanks/graphics/sprite_data/TankSprites.h
+        src/ktanks/graphics/sprite_data/TerrainSprites.h
 
         src/ktanks/graphics/Font.cpp
         src/ktanks/graphics/Font.h

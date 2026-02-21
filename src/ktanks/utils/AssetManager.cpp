@@ -121,7 +121,37 @@ namespace ktanks {
         return atlas;
     }
 
-    TextureAtlas AssetManager::getTankAtlas(TankType) const {
+    std::vector<std::string> generatePaths(const std::string& root, TankType t) {
+        auto name = "";
+        switch (t) {
+            case TankType::Red:
+                name = "Red";
+                break;
+            case TankType::Blue:
+                name = "Blue";
+                break;
+            case TankType::Green:
+                name = "Green";
+                break;
+            case TankType::Black:
+                name = "Black";
+                break;
+                default: {
+                    spdlog::error("Tank type {} not supported", static_cast<int>(t));
+                    return {};
+                }
+        }
+
+        auto paths = std::vector<std::string>();
+        paths.emplace_back(root + "/textures/tankBody_" + name +"_outline.png");
+        paths.emplace_back(root + "/textures/tank" + name +"_barrel2_outline.png");
+        paths.emplace_back(root + "/textures/bullet" + name +"1_outline.png");
+        paths.emplace_back(root + "/textures/bullet" + name +"2_outline.png");
+        paths.emplace_back(root + "/textures/bullet" + name +"3_outline.png");
+        return paths;
+    }
+
+    TextureAtlas AssetManager::getTankAtlas(const TankType t) const {
         constexpr auto atlas_size = glm::uvec2(128);
         TextureAtlas atlas(atlas_size);
 
@@ -148,16 +178,12 @@ namespace ktanks {
                 currentLineHeight = size.y;
             }
 
-            spdlog::info("Inserted {} at [{},{}] size [{},{}]", path, pos.x, pos.y, size.x, size.y);
-
             pos.x += size.x + 1;
         };
 
-        insert(m_root + "/textures/tankBody_blue.png");
-        insert(m_root + "/textures/tankBlue_barrel2.png");
-        insert(m_root + "/textures/bulletBlue1.png");
-        insert(m_root + "/textures/bulletBlue2.png");
-        insert(m_root + "/textures/bulletBlue3.png");
+        for (const auto& path : generatePaths(m_root,t)) {
+            insert(path);
+        }
 
         return atlas;
     }

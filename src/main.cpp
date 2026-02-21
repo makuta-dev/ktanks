@@ -4,13 +4,16 @@
 #include "ktanks/window/Window.h"
 #include "ktanks/Tanks.h"
 
+#include "glad/gl.h"
+
 using hclock = std::chrono::steady_clock;
 
 int main() {
     auto window = ktanks::Window("kTanks");
     const auto size = window.getSize();
-    auto tanks = ktanks::Tanks();
-    auto renderer = ktanks::Renderer();
+    auto asset_manager = ktanks::AssetManager();
+    auto tanks = ktanks::Tanks(asset_manager);
+    auto renderer = ktanks::Renderer(asset_manager);
     {
         renderer.resize(size.x, size.y);
         tanks.onEvent({
@@ -38,6 +41,7 @@ int main() {
                 renderer.resize(e.onWResize.width, e.onWResize.height);
             }
         }
+        glClear(GL_COLOR_BUFFER_BIT);
 
         renderer.beginFrame();
         tanks.onDraw(renderer);

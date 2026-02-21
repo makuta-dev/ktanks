@@ -3,17 +3,16 @@
 
 #include <cstdint>
 
-#include "sprite_data/TerrainSprites.h"
-
 #include "ktanks/graphics/Shader.h"
-#include "ktanks/graphics/TextureAtlas.h"
 #include "ktanks/graphics/Vertex.h"
+
+#include "ktanks/utils/AssetManager.h"
 
 namespace ktanks {
 
     class Renderer final {
     public:
-        Renderer();
+        explicit Renderer(const AssetManager &asset_manager);
         ~Renderer();
 
         void resize(int w, int h);
@@ -21,12 +20,12 @@ namespace ktanks {
         void beginFrame();
         void endFrame();
 
-        void drawTerrain(const glm::vec2& pos, const glm::vec2& size, TerrainSprite);
-        void drawTexture(const glm::vec2& pos, const glm::vec2& size, uint32_t texture_id);
+        void setTexture(uint32_t texture_id);
+
+        void drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region&);
 
     private:
         void flush();
-        void setTexture(uint32_t texture_id);
 
         uint32_t m_vao{0};
         uint32_t m_vbo{0};
@@ -36,7 +35,6 @@ namespace ktanks {
         std::vector<Vertex> m_vertices;
         std::vector<uint32_t> m_indices;
         glm::mat4 m_projection{1.f};
-        TextureAtlas m_terrain_atlas;
     };
 
 }

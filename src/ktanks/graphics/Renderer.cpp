@@ -3,15 +3,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "glad/gl.h"
-#include "ktanks/utils/AssetManager.h"
 
 namespace ktanks {
 
-    Renderer::Renderer() {
-        const auto assetManager = AssetManager();
-
-        m_terrain_atlas = assetManager.getTerrainAtlas();
-        m_shader = assetManager.getShader("simple");
+    Renderer::Renderer(const AssetManager &asset_manager) {
+        m_shader = asset_manager.getShader("simple");
 
         glGenVertexArrays(1, &m_vao);
         glGenBuffers(1, &m_vbo);
@@ -92,35 +88,14 @@ namespace ktanks {
         m_texture = texture_id;
     }
 
-    void Renderer::drawTerrain(const glm::vec2& pos, const glm::vec2& size, TerrainSprite sprite) {
-        setTexture(m_terrain_atlas.getTextureID());
-        auto regionOpt = m_terrain_atlas.at(static_cast<std::size_t>(sprite));
-        if (!regionOpt) return;
-
-        const auto [a, b] = *regionOpt;
+    void Renderer::drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region& region) {
+        const auto [a, b] = region;
         const auto offset = static_cast<uint32_t>(m_vertices.size());
 
         m_vertices.push_back({{pos.x, pos.y},               {a.x, a.y}});
         m_vertices.push_back({{pos.x + size.x, pos.y},      {b.x, a.y}});
         m_vertices.push_back({{pos.x + size.x, pos.y + size.y}, {b.x, b.y}});
         m_vertices.push_back({{pos.x, pos.y + size.y},      {a.x, b.y}});
-
-        m_indices.push_back(offset + 0);
-        m_indices.push_back(offset + 1);
-        m_indices.push_back(offset + 2);
-        m_indices.push_back(offset + 2);
-        m_indices.push_back(offset + 3);
-        m_indices.push_back(offset + 0);
-    }
-
-    void Renderer::drawTexture(const glm::vec2& pos, const glm::vec2& size, uint32_t texture_id) {
-        setTexture(texture_id);
-        const auto offset = static_cast<uint32_t>(m_vertices.size());
-
-        m_vertices.push_back({{pos.x, pos.y},               {0, 0}});
-        m_vertices.push_back({{pos.x + size.x, pos.y},      {1, 0}});
-        m_vertices.push_back({{pos.x + size.x, pos.y + size.y}, {1, 1}});
-        m_vertices.push_back({{pos.x, pos.y + size.y},      {0, 1}});
 
         m_indices.push_back(offset + 0);
         m_indices.push_back(offset + 1);
