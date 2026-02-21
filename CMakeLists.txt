@@ -35,6 +35,7 @@ add_executable(kTanks
         src/ktanks/Tanks.h
 
         src/main.cpp
+        src/ktanks/data/TerrainSpriteList.h
 )
 
 target_include_directories(kTanks PRIVATE src)

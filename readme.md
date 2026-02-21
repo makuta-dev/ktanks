@@ -95,8 +95,8 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 
 * [x] **Window Context:** Initialize SDL3, GLAD, and the OpenGL 3.3 viewport.
 * [x] **Shader Wrapper:** Create a C++ class to compile, checks and manage Vertex/Fragment shaders in runtime.
-* [ ] **Resource Loader:** Implement resource loader class that manages all low-level stuff to make code clean.
-* [ ] **Camera 2D:** Set up an Orthographic projection matrix via GLM.
+* [x] **Resource Loader:** Implement resource loader class that manages all low-level stuff to make code clean.
+* [x] **Camera 2D:** Set up an Orthographic projection matrix via GLM.
 
 ### 🎨 Phase 2: Rendering & Entities
 
@@ -124,7 +124,7 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 ### 📈 Current Milestone
 
 **Status:** `Phase 1: Foundation`  
-**Progress:** `[▓▓▓▓▓▓▓░░░░░] 55%`
+**Progress:** `[▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%`
 
 <!-- ▓░ -->
 
