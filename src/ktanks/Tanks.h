@@ -1,8 +1,7 @@
 #ifndef KTANKS_TANKS_H
 #define KTANKS_TANKS_H
 
-#include "graphics/Shader.h"
-#include "graphics/Texture.h"
+#include "ktanks/graphics/Renderer.h"
 
 namespace ktanks {
 
@@ -14,14 +13,11 @@ namespace ktanks {
         ~Tanks();
 
         void onUpdate(float dt);
-        void onDraw();
+        void onDraw(Renderer&);
         void onEvent(const Event&);
 
     private:
-        uint vao, vbo;
-        Shader shader;
-        Texture texture;
-        glm::mat4 projection;
+        glm::uvec2 view{0};
     };
 
 }

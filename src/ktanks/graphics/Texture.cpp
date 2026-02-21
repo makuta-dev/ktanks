@@ -9,6 +9,25 @@ namespace ktanks {
 
     Texture::Texture() = default;
 
+    Texture::Texture(const glm::uvec2& size) : m_size(size) {
+        glGenTextures(1, &m_id);
+        glBindTexture(GL_TEXTURE_2D, m_id);
+        glTexImage2D(
+            GL_TEXTURE_2D,
+            0,
+            GL_RGBA8,
+            static_cast<GLsizei>(m_size.x),
+            static_cast<GLsizei>(m_size.y),
+            0,
+            GL_RGBA,
+            GL_UNSIGNED_BYTE,
+            nullptr
+        );
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    }
+
     Texture::Texture(const uint32_t id, const glm::uvec2 &size) : m_id(id), m_size(size) {}
 
     Texture::~Texture() { if (m_id) glDeleteTextures(1, &m_id); }
@@ -29,6 +48,12 @@ namespace ktanks {
     void Texture::bind(const uint32_t slot) const {
         glActiveTexture(GL_TEXTURE0 + slot);
         glBindTexture(GL_TEXTURE_2D, m_id);
+    }
+
+    void Texture::unbind() const {
+        if (m_id){
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
     }
 
     Texture Texture::loadFile(const std::string& path) {

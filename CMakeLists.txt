@@ -15,12 +15,18 @@ add_subdirectory(libs/glad)
 add_subdirectory(libs/libspng)
 
 add_executable(kTanks
+        src/ktanks/data/TerrainSpriteList.h
+
         src/ktanks/graphics/Font.cpp
         src/ktanks/graphics/Font.h
+        src/ktanks/graphics/Renderer.cpp
+        src/ktanks/graphics/Renderer.h
         src/ktanks/graphics/Shader.cpp
         src/ktanks/graphics/Shader.h
         src/ktanks/graphics/Texture.cpp
         src/ktanks/graphics/Texture.h
+        src/ktanks/graphics/TextureAtlas.cpp
+        src/ktanks/graphics/TextureAtlas.h
         src/ktanks/graphics/Vertex.cpp
         src/ktanks/graphics/Vertex.h
 
@@ -35,7 +41,6 @@ add_executable(kTanks
         src/ktanks/Tanks.h
 
         src/main.cpp
-        src/ktanks/data/TerrainSpriteList.h
 )
 
 target_include_directories(kTanks PRIVATE src)

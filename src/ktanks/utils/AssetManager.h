@@ -6,6 +6,7 @@
 #include "ktanks/graphics/Font.h"
 #include "ktanks/graphics/Shader.h"
 #include "ktanks/graphics/Texture.h"
+#include "ktanks/graphics/TextureAtlas.h"
 
 namespace ktanks {
 
@@ -13,9 +14,11 @@ namespace ktanks {
     public:
         explicit AssetManager(std::string  assets_root = ASSETS_ROOT);
 
-        Shader getShader(const std::string& name) const;
-        Texture getTexture(const std::string& name);
+        [[nodiscard]] Shader getShader(const std::string& name) const;
+        [[nodiscard]] Texture getTexture(const std::string& name) const;
         Font getFont(const std::string& name);
+
+        [[nodiscard]] TextureAtlas getTerrainAtlas() const;
 
     private:
         std::string m_root;

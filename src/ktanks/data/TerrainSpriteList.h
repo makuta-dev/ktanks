@@ -34,14 +34,14 @@ namespace ktanks {
         SSplitS,
         SSplitW,
 
-        RTransitionE,
         RTransitionEDirt,
-        RTransitionN,
+        RTransitionE,
         RTransitionNDirt,
-        RTransitionS,
+        RTransitionN,
         RTransitionSDirt,
-        RTransitionW,
+        RTransitionS,
         RTransitionWDirt,
+        RTransitionW,
 
         TTransitionN,
         TTransitionS,

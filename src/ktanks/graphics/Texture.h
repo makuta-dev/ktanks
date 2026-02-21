@@ -11,6 +11,7 @@ namespace ktanks {
     class Texture final {
     public:
         Texture();
+        explicit Texture(const glm::uvec2& size);
         Texture(uint32_t id, const glm::uvec2 &size);
         ~Texture();
 
@@ -21,6 +22,7 @@ namespace ktanks {
         Texture& operator=(const Texture&) = delete;
 
         void bind(uint32_t slot = 0) const;
+        void unbind() const;
 
         [[nodiscard]] glm::uvec2 getSize() const;
         [[nodiscard]] uint32_t getWidth() const;
