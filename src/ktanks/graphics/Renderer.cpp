@@ -16,7 +16,7 @@ namespace ktanks {
         glBindVertexArray(m_vao);
 
         glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-        glBufferData(GL_ARRAY_BUFFER, 10000 * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, 4096 * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void *>(offsetof(Vertex, pos)));
@@ -24,7 +24,7 @@ namespace ktanks {
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<void *>(offsetof(Vertex, uv)));
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 15000 * sizeof(uint32_t), nullptr, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, 16384 * sizeof(uint32_t), nullptr, GL_DYNAMIC_DRAW);
 
         glBindVertexArray(0);
 
@@ -81,11 +81,12 @@ namespace ktanks {
         m_indices.clear();
     }
 
-    void Renderer::setTexture(const uint32_t texture_id) {
+    void Renderer::setTexture(const uint32_t texture_id, const bool is_text) {
         if (m_texture != texture_id) {
             flush();
         }
         m_texture = texture_id;
+        m_shader.setInt("is_text", is_text);
     }
 
     void Renderer::drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region& region) {
@@ -104,5 +105,23 @@ namespace ktanks {
         m_indices.push_back(offset + 3);
         m_indices.push_back(offset + 0);
     }
+
+    void Renderer::drawText(const std::string& text, const glm::vec2& pos, const glm::vec3& color, const Font& font) {
+        setTexture(font.getTextureID(),true);
+        m_shader.setVec3("text_col", color);
+        auto p = pos;
+        for (const auto& c : text) {
+            if (const auto glyph = font.get(c)) {
+                auto ps = p;
+                ps.x += static_cast<float>(glyph->bearing.x);
+                ps.y -= static_cast<float>(glyph->bearing.y);
+
+                drawSprite(ps,glyph->size,glyph->uv);
+
+                p.x += static_cast<float>(glyph->advance);
+            }
+        }
+    }
+
 
 }

@@ -3,7 +3,6 @@
 
 #include <cstdint>
 
-#include "ktanks/graphics/Shader.h"
 #include "ktanks/graphics/Vertex.h"
 
 #include "ktanks/utils/AssetManager.h"
@@ -20,9 +19,10 @@ namespace ktanks {
         void beginFrame();
         void endFrame();
 
-        void setTexture(uint32_t texture_id);
+        void setTexture(uint32_t texture_id, bool is_text = false);
 
         void drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region&);
+        void drawText(const std::string& text, const glm::vec2& pos, const glm::vec3& color, const Font& font);
 
     private:
         void flush();

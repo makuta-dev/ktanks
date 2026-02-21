@@ -18,7 +18,7 @@ namespace ktanks {
 
         [[nodiscard]] Shader getShader(const std::string& name) const;
         [[nodiscard]] Texture getTexture(const std::string& name) const;
-        Font getFont(const std::string& name);
+        [[nodiscard]] Font getFont(const std::string& name,int size = 16) const;
 
         [[nodiscard]] TextureAtlas getTerrainAtlas() const;
         [[nodiscard]] TextureAtlas getTankAtlas(TankType) const;

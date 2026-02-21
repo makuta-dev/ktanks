@@ -1,25 +1,25 @@
 #include "Tanks.h"
 
-#include "glad/gl.h"
-
 namespace ktanks {
 
-    constexpr auto tile_size = glm::vec2(32);
-
     Tanks::Tanks(const AssetManager &asset_manager) {
-        glClearColor(0.f, 0.0f, 0.0f, 1.f);
         tank = asset_manager.getTankAtlas(TankType::Green);
+        font = asset_manager.getFont("Kenney_Future",16);
     }
 
     Tanks::~Tanks() = default;
 
-    void Tanks::onUpdate(float dt) {
-
+    void Tanks::onUpdate(const float dt) {
+        lastFps += dt;
+        if (lastFps > 0.25f) {
+            const auto newFps = 1.0f / dt;
+            fps = (fps + newFps) / 2.f;
+            lastFps = 0.f;
+        }
     }
 
     void Tanks::onDraw(Renderer& r) {
-        r.setTexture(tank.getTextureID());
-        r.drawSprite({0,0},{128,128},{{0,0},{1,1}});
+        r.drawText(std::format("{:3.2f}",fps),{0,16},{1,1,1},font);
     }
 
     void Tanks::onEvent(const Event& e) {

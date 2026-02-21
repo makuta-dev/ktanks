@@ -15,6 +15,7 @@ The goal of this project is to master low-level game engine architecture, memory
 * **Math Library:** GLM (OpenGL Mathematics)
 * **Logging Library:** spdlog
 * **Image Loader:** libspng
+* **Font Tessellate library:** Freetype2
 * **Assets:** Kenney.nl
 
 ## 🎮 Features
@@ -36,6 +37,7 @@ You will need the following libraries installed or available in your include pat
 * **OpenGL** (OpenGL implementation libs for your GPU)
 * **GLM** (OpenGL Mathematics)
 * **spdlog** (Logging library)
+* **Freetype2** (Font loading library)
 
 ### 2. Compilation
 
@@ -124,7 +126,7 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 ### 📈 Current Milestone
 
 **Status:** `Phase 2: Rendering & Entities`  
-**Progress:** `[▓░░░░░░░░░] 10%`
+**Progress:** `[▓▓▓░░░░░░░] 30%`
 
 <!-- ▓░ -->
 

@@ -10,6 +10,7 @@ find_package(SDL3 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(glm REQUIRED)
 find_package(spdlog REQUIRED)
+find_package(Freetype REQUIRED)
 
 add_subdirectory(libs/glad)
 add_subdirectory(libs/libspng)
@@ -60,6 +61,8 @@ target_link_libraries(kTanks PRIVATE
         OpenGL::GL
         glm::glm
         spdlog::spdlog
+        Freetype::Freetype
+
         glad
         spng
 )
@@ -69,6 +72,7 @@ target_include_directories(kTanks PRIVATE
         OpenGL::GL
         glm::glm
         spdlog::spdlog
+        Freetype::Freetype
 
         libs/glad/include
         libs/libspng/spng

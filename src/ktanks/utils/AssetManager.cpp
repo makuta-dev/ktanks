@@ -49,9 +49,8 @@ namespace ktanks {
         return Texture::loadFile(m_root + "/textures/" + name + ".png");
     }
 
-    Font AssetManager::getFont(const std::string& name) {
-        //TODO(implement getFont(const std::string&))
-        return {};
+    Font AssetManager::getFont(const std::string& name, const int size) const {
+        return Font(m_root + "/fonts/" + name + ".ttf", size);
     }
 
     TextureAtlas AssetManager::getTerrainAtlas() const {
@@ -122,7 +121,7 @@ namespace ktanks {
     }
 
     std::vector<std::string> generatePaths(const std::string& root, TankType t) {
-        auto name = "";
+        std::string name;
         switch (t) {
             case TankType::Red:
                 name = "Red";
@@ -136,10 +135,10 @@ namespace ktanks {
             case TankType::Black:
                 name = "Black";
                 break;
-                default: {
-                    spdlog::error("Tank type {} not supported", static_cast<int>(t));
-                    return {};
-                }
+            default: {
+                spdlog::error("Tank type {} not supported", static_cast<int>(t));
+                return {};
+            }
         }
 
         auto paths = std::vector<std::string>();
