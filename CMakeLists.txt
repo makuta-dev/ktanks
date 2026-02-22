@@ -23,9 +23,6 @@ add_executable(kTanks
         src/ktanks/data/Map.cpp
         src/ktanks/data/Map.h
 
-        src/ktanks/entity/Player.cpp
-        src/ktanks/entity/Player.h
-
         src/ktanks/graphics/sprite_data/TankSprites.h
         src/ktanks/graphics/sprite_data/TerrainSprites.h
 
@@ -49,10 +46,14 @@ add_executable(kTanks
         src/ktanks/window/Window.cpp
         src/ktanks/window/Window.h
 
-        src/ktanks/Tanks.cpp
-        src/ktanks/Tanks.h
+        src/ktanks/Game.cpp
+        src/ktanks/Game.h
 
         src/main.cpp
+        src/ktanks/entity/Tank.cpp
+        src/ktanks/entity/Tank.h
+        src/ktanks/graphics/Camera.cpp
+        src/ktanks/graphics/Camera.h
 )
 
 target_include_directories(kTanks PRIVATE src)

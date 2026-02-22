@@ -108,6 +108,10 @@ namespace ktanks {
         }
     }
 
+    bool Window::isPressed(const SDL_Scancode key) {
+        return SDL_GetKeyboardState(nullptr)[key];
+    }
+
     bool popEvent(Event& outEvent) {
         SDL_Event sdlEvent;
 

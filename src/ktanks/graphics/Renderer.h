@@ -19,6 +19,7 @@ namespace ktanks {
         void beginFrame();
         void endFrame();
 
+        void setViewMatrix(const glm::mat4 &view);
         void setTexture(uint32_t texture_id, bool is_text = false);
 
         void drawSprite(const glm::vec2& pos, const glm::vec2& size, float angle, const glm::vec2& center,const Region&);
@@ -36,6 +37,7 @@ namespace ktanks {
         std::vector<Vertex> m_vertices;
         std::vector<uint32_t> m_indices;
         glm::mat4 m_projection{1.f};
+        glm::mat4 m_view{1.f};
     };
 
 }

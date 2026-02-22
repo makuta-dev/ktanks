@@ -5,6 +5,7 @@
 #include <glm/vec2.hpp>
 
 #include <string>
+#include <SDL3/SDL_scancode.h>
 
 #include "Event.h"
 
@@ -27,6 +28,8 @@ namespace ktanks {
 
         [[nodiscard]] SDL_Window* getSDLWindow() const;
         void swapBuffers() const;
+
+        static bool isPressed(SDL_Scancode key);
 
     private:
         bool m_running = false;

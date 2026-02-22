@@ -3,7 +3,7 @@
 
 namespace ktanks {
 
-    enum class TankSprites {
+    enum class TankSprites : int {
         Body,
         Barrel,
         Bullet1,

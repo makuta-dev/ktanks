@@ -39,15 +39,20 @@ namespace ktanks {
         const auto fw = static_cast<float>(m_texture.getWidth());
         const auto fh = static_cast<float>(m_texture.getHeight());
 
+        const float texel_x = 0.5f / fw;
+        const float texel_y = 0.5f / fh;
+
         Region reg{};
         reg.a = glm::vec2(
-            static_cast<float>(pos.x) / fw,
-            static_cast<float>(pos.y) / fh
+            static_cast<float>(pos.x) / fw + texel_x,
+            static_cast<float>(pos.y) / fh + texel_y
         );
         reg.b = glm::vec2(
-            static_cast<float>(pos.x + size.x) / fw,
-            static_cast<float>(pos.y + size.y) / fh
+            static_cast<float>(pos.x + size.x) / fw - texel_x,
+            static_cast<float>(pos.y + size.y) / fh - texel_y
         );
+
+        reg.size = size;
 
         m_regions.push_back(reg);
         return  m_regions.size() - 1;

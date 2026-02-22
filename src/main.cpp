@@ -2,7 +2,7 @@
 
 #include "ktanks/graphics/Renderer.h"
 #include "ktanks/window/Window.h"
-#include "ktanks/Tanks.h"
+#include "ktanks/Game.h"
 
 #include "glad/gl.h"
 
@@ -12,7 +12,7 @@ int main() {
     auto window = ktanks::Window("kTanks");
     const auto size = window.getSize();
     auto asset_manager = ktanks::AssetManager();
-    auto tanks = ktanks::Tanks(asset_manager);
+    auto tanks = ktanks::Game(asset_manager);
     auto renderer = ktanks::Renderer(asset_manager);
     {
         renderer.resize(size.x, size.y);

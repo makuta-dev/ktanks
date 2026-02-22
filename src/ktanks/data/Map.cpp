@@ -46,4 +46,8 @@ namespace ktanks {
         return pos.x * m_size.x + pos.y;
     }
 
+    glm::uvec2 Map::getSize() const {
+        return m_size;
+    }
+
 }

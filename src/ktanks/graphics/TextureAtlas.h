@@ -10,6 +10,7 @@ namespace ktanks {
     struct Region {
         glm::vec2 a;
         glm::vec2 b;
+        glm::uvec2 size;
     };
 
     class TextureAtlas {

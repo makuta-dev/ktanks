@@ -3,7 +3,7 @@
 
 namespace ktanks {
 
-    enum class TerrainSprite {
+    enum class TerrainSprite : int {
         Grass1,
         Grass2,
         GCornerLL,

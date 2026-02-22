@@ -13,6 +13,8 @@ namespace ktanks {
         [[nodiscard]] TerrainSprite get(const glm::uvec2 &pos) const;
         void set(const glm::uvec2 &pos,TerrainSprite);
 
+        [[nodiscard]] glm::uvec2 getSize() const;
+
     private:
         [[nodiscard]] std::size_t getIndex(const glm::uvec2 &pos) const;
 

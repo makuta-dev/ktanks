@@ -55,22 +55,32 @@ namespace ktanks {
 
     TextureAtlas AssetManager::getTerrainAtlas() const {
         constexpr auto atlas_size = glm::uvec2(1024);
-        TextureAtlas atlas(atlas_size);
+        constexpr auto tile_size = glm::uvec2(128);
+        constexpr uint32_t padding = 2;
 
+        TextureAtlas atlas(atlas_size);
         auto pos = glm::uvec2(0);
 
-        auto insert = [this, &pos, &atlas](const std::string& name) {
-            constexpr auto sprite_size = glm::uvec2(128);
+        auto insert = [this, &pos, &atlas, tile_size, atlas_size](const std::string& name) {
             const auto path = m_root + "/textures/terrain/" + name;
             const auto [pixels, size] = loadImage(path);
 
-            atlas.insert(pos, size, pixels.data());
-
-            pos.x += sprite_size.x;
-            if (pos.x >= atlas_size.x) {
-                pos.x = 0;
-                pos.y += sprite_size.y;
+            if (size != tile_size) {
+                spdlog::warn("Tile {} size mismatch! Expected {}, got {}", name, tile_size.x, size.x);
             }
+
+            if (pos.x + tile_size.x > atlas_size.x) {
+                pos.x = 0;
+                pos.y += tile_size.y + padding;
+            }
+
+            if (pos.y + tile_size.y > atlas_size.y) {
+                spdlog::error("Atlas is full! Cannot insert {}", name);
+                return;
+            }
+
+            atlas.insert(pos, size, pixels.data());
+            pos.x += tile_size.x + padding;
         };
 
         insert("tileGrass1.png");

@@ -56,11 +56,16 @@ namespace ktanks {
         flush();
     }
 
+    void Renderer::setViewMatrix(const glm::mat4 &view) {
+        m_view = view;
+    }
+
     void Renderer::flush() {
         if (m_indices.empty()) return;
 
         m_shader.use();
         m_shader.setMat4("proj", m_projection);
+        m_shader.setMat4("view", m_view);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, m_texture);
@@ -90,7 +95,7 @@ namespace ktanks {
     }
 
     void Renderer::drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region& region) {
-        const auto [a, b] = region;
+        const auto [a, b, _] = region;
         const auto offset = static_cast<uint32_t>(m_vertices.size());
 
         m_vertices.push_back({{pos.x, pos.y},               {a.x, a.y}});
@@ -107,7 +112,7 @@ namespace ktanks {
     }
 
     void Renderer::drawSprite(const glm::vec2& pos, const glm::vec2& size, float angle, const glm::vec2& center, const Region& region) {
-        const auto [a, b] = region;
+        const auto [a, b, _] = region;
         const auto offset = static_cast<uint32_t>(m_vertices.size());
 
         const auto origin = size * center;
