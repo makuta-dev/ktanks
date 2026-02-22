@@ -11,7 +11,7 @@ namespace ktanks {
 
     class Renderer final {
     public:
-        explicit Renderer(const AssetManager &asset_manager);
+        explicit Renderer(AssetManager&);
         ~Renderer();
 
         void resize(int w, int h);
@@ -33,7 +33,7 @@ namespace ktanks {
         uint32_t m_vbo{0};
         uint32_t m_ebo{0};
         uint32_t m_texture{0};
-        Shader m_shader;
+        Shader* m_shader;
         std::vector<Vertex> m_vertices;
         std::vector<uint32_t> m_indices;
         glm::mat4 m_projection{1.f};

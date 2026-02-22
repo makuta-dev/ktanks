@@ -1,9 +1,11 @@
 #ifndef KTANKS_TERRAINSPRITELIST_H
 #define KTANKS_TERRAINSPRITELIST_H
 
+#include <cstdint>
+
 namespace ktanks {
 
-    enum class TerrainSprite : int {
+    enum class TerrainSprite : uint8_t {
         Grass1,
         Grass2,
         GCornerLL,

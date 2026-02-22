@@ -1,5 +1,7 @@
 #include "AssetManager.h"
 
+#include <algorithm>
+#include <filesystem>
 #include <utility>
 #include <spdlog/spdlog.h>
 
@@ -39,162 +41,261 @@ namespace ktanks {
         return idata;
     }
 
-    AssetManager::AssetManager(std::string assets_root) : m_root(std::move(assets_root)) {}
-
-    Shader AssetManager::getShader(const std::string& name) const {
-        return Shader::fromName(m_root + "/shaders", name);
+    std::vector<std::string> getPaths(const std::string& root, const AtlasID id) {
+        auto data = std::vector<std::string>();
+        if (id == AtlasID::Terrain) {
+            data.push_back(root + "/textures/terrain/tileGrass1.png");
+            data.push_back(root + "/textures/terrain/tileGrass2.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadCornerLL.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadCornerLR.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadCornerUL.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadCornerUR.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadCrossing.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadCrossingRound.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadEast.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadNorth.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadSplitE.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadSplitN.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadSplitS.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadSplitW.png");
+            data.push_back(root + "/textures/terrain/tileSand1.png");
+            data.push_back(root + "/textures/terrain/tileSand2.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadCornerLL.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadCornerLR.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadCornerUL.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadCornerUR.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadCrossing.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadCrossingRound.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadEast.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadNorth.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadSplitE.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadSplitN.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadSplitS.png");
+            data.push_back(root + "/textures/terrain/tileSand_roadSplitW.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadTransitionE_dirt.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadTransitionE.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadTransitionN_dirt.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadTransitionN.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadTransitionS_dirt.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadTransitionS.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadTransitionW_dirt.png");
+            data.push_back(root + "/textures/terrain/tileGrass_roadTransitionW.png");
+            data.push_back(root + "/textures/terrain/tileGrass_transitionN.png");
+            data.push_back(root + "/textures/terrain/tileGrass_transitionS.png");
+            data.push_back(root + "/textures/terrain/tileGrass_transitionW.png");
+            data.push_back(root + "/textures/terrain/tileGrass_transitionE.png");
+        }
+        if (id == AtlasID::Tanks) {
+            for(const auto& color : {"Red","Blue","Green","Dark"}) {
+                data.push_back(root + "/textures/tankBody_" + color +"_outline.png");
+                data.push_back(root + "/textures/tank" + color +"_barrel2_outline.png");
+                data.push_back(root + "/textures/bullet" + color +"1_outline.png");
+                data.push_back(root + "/textures/bullet" + color +"2_outline.png");
+                data.push_back(root + "/textures/bullet" + color +"3_outline.png");
+            }
+        }
+        return data;
     }
 
-    Texture AssetManager::getTexture(const std::string& name) const {
-        return Texture::loadFile(m_root + "/textures/" + name + ".png");
-    }
+    struct PackedImage {
+        int id;
+        ImageData image;
+        glm::uvec2 position{};
+    };
 
-    Font AssetManager::getFont(const std::string& name, const int size) const {
-        return Font(m_root + "/fonts/" + name + ".ttf", size);
-    }
+    struct Node {
+        uint32_t x;
+        uint32_t y;
+        uint32_t width;
+    };
 
-    TextureAtlas AssetManager::getTerrainAtlas() const {
-        constexpr auto atlas_size = glm::uvec2(1024);
-        constexpr auto tile_size = glm::uvec2(128);
-        constexpr uint32_t padding = 2;
+    TextureAtlas newAtlasFor(const std::string& root, const AtlasID id) {
+        const auto atlas_size = id == AtlasID::Terrain ? glm::uvec2(1024) : glm::uvec2(256);
+        const auto paths = getPaths(root,id);
+        std::vector<PackedImage> images;
 
-        TextureAtlas atlas(atlas_size);
-        auto pos = glm::uvec2(0);
+        for (int i = 0; i < paths.size(); i++) {
+            images.push_back({
+                i,
+                loadImage(paths[i]),
+                {}
+            });
+        }
 
-        auto insert = [this, &pos, &atlas, tile_size, atlas_size](const std::string& name) {
-            const auto path = m_root + "/textures/terrain/" + name;
-            const auto [pixels, size] = loadImage(path);
+        if (images.empty())
+            return TextureAtlas(0,atlas_size);
 
-            if (size != tile_size) {
-                spdlog::warn("Tile {} size mismatch! Expected {}, got {}", name, tile_size.x, size.x);
+        std::ranges::sort(images, [](const auto& a, const auto& b) {
+            return a.image.size.y > b.image.size.y;
+        });
+
+        std::vector<Node> skyline;
+        skyline.push_back({0, 0, atlas_size.x});
+
+        auto fit = [&](const long index,
+                const uint32_t w,
+                const uint32_t h,
+                uint32_t& outY) -> bool {
+
+            if (const uint32_t x = skyline[index].x; x + w > atlas_size.x)
+                return false;
+
+            uint32_t widthLeft = w;
+            uint32_t y = skyline[index].y;
+            size_t i = index;
+
+            while (widthLeft > 0) {
+                y = std::max(y, skyline[i].y);
+
+                if (y + h > atlas_size.y)
+                    return false;
+
+                if (skyline[i].width >= widthLeft)
+                    break;
+
+                widthLeft -= skyline[i].width;
+                ++i;
+
+                if (i >= skyline.size())
+                    return false;
             }
 
-            if (pos.x + tile_size.x > atlas_size.x) {
-                pos.x = 0;
-                pos.y += tile_size.y + padding;
-            }
-
-            if (pos.y + tile_size.y > atlas_size.y) {
-                spdlog::error("Atlas is full! Cannot insert {}", name);
-                return;
-            }
-
-            atlas.insert(pos, size, pixels.data());
-            pos.x += tile_size.x + padding;
+            outY = y;
+            return true;
         };
 
-        insert("tileGrass1.png");
-        insert("tileGrass2.png");
-        insert("tileGrass_roadCornerLL.png");
-        insert("tileGrass_roadCornerLR.png");
-        insert("tileGrass_roadCornerUL.png");
-        insert("tileGrass_roadCornerUR.png");
-        insert("tileGrass_roadCrossing.png");
-        insert("tileGrass_roadCrossingRound.png");
-        insert("tileGrass_roadEast.png");
-        insert("tileGrass_roadNorth.png");
-        insert("tileGrass_roadSplitE.png");
-        insert("tileGrass_roadSplitN.png");
-        insert("tileGrass_roadSplitS.png");
-        insert("tileGrass_roadSplitW.png");
+        auto addLevel = [&](const long index,
+                     const uint32_t x,
+                     const uint32_t y,
+                     const uint32_t w,
+                     const uint32_t h) {
 
-        insert("tileSand1.png");
-        insert("tileSand2.png");
-        insert("tileSand_roadCornerLL.png");
-        insert("tileSand_roadCornerLR.png");
-        insert("tileSand_roadCornerUL.png");
-        insert("tileSand_roadCornerUR.png");
-        insert("tileSand_roadCrossing.png");
-        insert("tileSand_roadCrossingRound.png");
-        insert("tileSand_roadEast.png");
-        insert("tileSand_roadNorth.png");
-        insert("tileSand_roadSplitE.png");
-        insert("tileSand_roadSplitN.png");
-        insert("tileSand_roadSplitS.png");
-        insert("tileSand_roadSplitW.png");
+            const Node newNode{ x, y + h, w };
 
-        insert("tileGrass_roadTransitionE_dirt.png");
-        insert("tileGrass_roadTransitionE.png");
-        insert("tileGrass_roadTransitionN_dirt.png");
-        insert("tileGrass_roadTransitionN.png");
-        insert("tileGrass_roadTransitionS_dirt.png");
-        insert("tileGrass_roadTransitionS.png");
-        insert("tileGrass_roadTransitionW_dirt.png");
-        insert("tileGrass_roadTransitionW.png");
+            skyline.insert(skyline.begin() + index, newNode);
 
-        insert("tileGrass_transitionN.png");
-        insert("tileGrass_transitionS.png");
-        insert("tileGrass_transitionW.png");
-        insert("tileGrass_transitionE.png");
+            long i = index + 1;
+
+            while (i < skyline.size()) {
+
+                const uint32_t prevRight =
+                    skyline[i - 1].x + skyline[i - 1].width;
+
+                if (skyline[i].x < prevRight) {
+
+                    const uint32_t overlap = prevRight - skyline[i].x;
+
+                    skyline[i].x += overlap;
+
+                    if (skyline[i].width <= overlap) {
+                        skyline[i].width = 0;
+                        skyline.erase(skyline.begin() + i);
+                        continue;
+                    }
+
+                    skyline[i].width -= overlap;
+                }
+                else break;
+
+                ++i;
+            }
+        };
+
+        for (auto& img : images) {
+            uint32_t bestY = UINT32_MAX;
+            long bestIndex = 0;
+            bool found = false;
+
+            for (long i = 0; i < skyline.size(); ++i) {
+                if (uint32_t y; fit(i, img.image.size.x, img.image.size.y, y)) {
+                    if (y < bestY) {
+                        bestY = y;
+                        bestIndex = i;
+                        found = true;
+                    }
+                }
+            }
+
+            if (!found) {
+                throw std::runtime_error("Atlas too small");
+            }
+
+            img.position = {skyline[bestIndex].x, bestY};
+
+            addLevel(bestIndex,
+                     img.position.x,
+                     img.position.y,
+                     img.image.size.x,
+                     img.image.size.y);
+        }
+
+        TextureAtlas atlas{static_cast<int>(images.size()),atlas_size};
+
+        for (const auto&[tid, image, position] : images) {
+            atlas.insert(
+                tid,
+                position,
+                image.size,
+                image.data.data()
+            );
+        }
 
         return atlas;
     }
 
-    std::vector<std::string> generatePaths(const std::string& root, TankType t) {
-        std::string name;
-        switch (t) {
-            case TankType::Red:
-                name = "Red";
-                break;
-            case TankType::Blue:
-                name = "Blue";
-                break;
-            case TankType::Green:
-                name = "Green";
-                break;
-            case TankType::Black:
-                name = "Dark";
-                break;
-            default: {
-                spdlog::error("Tank type {} not supported", static_cast<int>(t));
-                return {};
-            }
+    std::string getNameBy(const ShaderID id) {
+        if (id == ShaderID::Default) {
+            return "simple";
         }
-
-        auto paths = std::vector<std::string>();
-        paths.emplace_back(root + "/textures/tankBody_" + name +"_outline.png");
-        paths.emplace_back(root + "/textures/tank" + name +"_barrel2_outline.png");
-        paths.emplace_back(root + "/textures/bullet" + name +"1_outline.png");
-        paths.emplace_back(root + "/textures/bullet" + name +"2_outline.png");
-        paths.emplace_back(root + "/textures/bullet" + name +"3_outline.png");
-        return paths;
+        return "";
     }
 
-    TextureAtlas AssetManager::getTankAtlas(const TankType t) const {
-        constexpr auto atlas_size = glm::uvec2(128);
-        TextureAtlas atlas(atlas_size);
-
-        auto pos = glm::uvec2(0);
-        uint32_t currentLineHeight = 0;
-
-        auto insert = [&](const std::string& path) {
-            const auto [pixels, size] = loadImage(path);
-
-            if (pos.x + size.x > atlas_size.x) {
-                pos.x = 0;
-                pos.y += currentLineHeight + 1;
-                currentLineHeight = 0;
-            }
-
-            if (pos.y + size.y > atlas_size.y) {
-                spdlog::error("Atlas full! Cannot insert {}", path);
-                return;
-            }
-
-            atlas.insert(pos, size, pixels.data());
-
-            if (size.y > currentLineHeight) {
-                currentLineHeight = size.y;
-            }
-
-            pos.x += size.x + 1;
-        };
-
-        for (const auto& path : generatePaths(m_root,t)) {
-            insert(path);
-        }
-
-        return atlas;
+    std::string getNameBy(TextureID) {
+        return "";
     }
 
+    AssetManager::AssetManager(std::string assets_root) : m_root(std::move(assets_root)){}
+
+    Shader& AssetManager::getShader(const ShaderID id) {
+        const auto index = static_cast<size_t>(id);
+
+        if (!m_shaders[index]) {
+            m_shaders[index] = std::make_unique<Shader>(
+                std::move(Shader::fromName(m_root + "/shaders", getNameBy(id)))
+            );
+        }
+
+        return *m_shaders[index];
+    }
+
+    Texture& AssetManager::getTexture(const TextureID id) {
+        const auto index = static_cast<size_t>(id);
+
+        if (!m_textures[index]) {
+            m_textures[index] = std::make_unique<Texture>(
+                std::move(Texture::loadFile(m_root + "/textures/" + getNameBy(id) + ".png"))
+            );
+        }
+
+        return *m_textures[index];
+    }
+
+    TextureAtlas& AssetManager::getTextureAtlas(AtlasID id) {
+        const auto index = static_cast<size_t>(id);
+
+        if (!m_atlases[index]) {
+            m_atlases[index] = std::make_unique<TextureAtlas>(
+                std::move(newAtlasFor(m_root,id))
+            );
+        }
+
+        return *m_atlases[index];
+    }
+
+    Font& AssetManager::getFont() {
+        if (!m_font) {
+            m_font = std::make_unique<Font>(m_root + "fonts/Kenney_Future.ttf", 32);
+        }
+        return *m_font;
+    }
 }

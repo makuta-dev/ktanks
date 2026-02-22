@@ -1,8 +1,11 @@
 #ifndef KTANKS_MAP_H
 #define KTANKS_MAP_H
 
-#include "ktanks/graphics/Renderer.h"
-#include "ktanks/graphics/sprite_data/TerrainSprites.h"
+#include <vector>
+
+#include <glm/vec2.hpp>
+
+#include "ktanks/core/constants/TerrainData.h"
 
 namespace ktanks {
 

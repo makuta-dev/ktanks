@@ -1,7 +1,7 @@
 #ifndef KTANKS_ASSETMANAGER_H
 #define KTANKS_ASSETMANAGER_H
 
-#include "ktanks/core/TankType.h"
+#include <memory>
 
 #include "ktanks/graphics/Font.h"
 #include "ktanks/graphics/Shader.h"
@@ -10,19 +10,43 @@
 
 namespace ktanks {
 
+    enum class ShaderID : uint8_t {
+        Default,
+        Count
+    };
+
+    enum class TextureID : uint16_t {
+        Count
+    };
+
+    enum class AtlasID : uint16_t {
+        Terrain,
+        Tanks,
+        Count
+    };
+
     class AssetManager final {
     public:
         explicit AssetManager(std::string assets_root = ASSETS_ROOT);
 
-        [[nodiscard]] Shader getShader(const std::string& name) const;
-        [[nodiscard]] Texture getTexture(const std::string& name) const;
-        [[nodiscard]] Font getFont(const std::string& name,int size = 16) const;
-
-        [[nodiscard]] TextureAtlas getTerrainAtlas() const;
-        [[nodiscard]] TextureAtlas getTankAtlas(TankType) const;
+        Shader& getShader(ShaderID);
+        Texture& getTexture(TextureID);
+        TextureAtlas& getTextureAtlas(AtlasID);
+        Font& getFont();
 
     private:
         std::string m_root;
+
+        std::array<std::unique_ptr<Shader>,
+            static_cast<size_t>(ShaderID::Count)> m_shaders{};
+
+        std::array<std::unique_ptr<Texture>,
+            static_cast<size_t>(TextureID::Count)> m_textures{};
+
+        std::array<std::unique_ptr<TextureAtlas>,
+            static_cast<size_t>(AtlasID::Count)> m_atlases{};
+
+        std::unique_ptr<Font> m_font{nullptr};
     };
 
 }

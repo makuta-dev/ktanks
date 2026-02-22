@@ -2,34 +2,19 @@
 
 #include <glm/trigonometric.hpp>
 
-#include "ktanks/graphics/sprite_data/TankSprites.h"
-
 namespace ktanks {
 
     constexpr auto move_speed = 30.f;
     constexpr auto rotate_speed = 0.5f;
     constexpr auto barrel_speed = 0.75f;
 
-    Tank::Tank(const glm::vec2& pos,const AssetManager& manager, const TankType type)
-        : m_pos(pos), m_vel(0.f){
-        m_atlas = manager.getTankAtlas(type);
-    }
+    Tank::Tank(const glm::vec2 &pos, TankColor) : m_pos(pos), m_vel(0.f){}
 
     void Tank::onUpdate(const float dt) {
         if (std::abs(m_vel.x) > 0 || std::abs(m_vel.y) > 0) {
             m_pos += m_vel * move_speed * dt;
         }
         m_vel *= 0.85f;
-    }
-
-    void Tank::onDraw(Renderer& r) {
-        if(const auto reg = m_atlas.at(static_cast<int>(TankSprites::Body))) {
-            r.setTexture(m_atlas.getTextureID());
-            r.drawSprite(m_pos, glm::vec2(reg->size), glm::radians<float>(m_body_rotation),glm::vec2(0.5),*reg);
-            if(const auto reg2 = m_atlas.at(static_cast<int>(TankSprites::Barrel))){
-                r.drawSprite(m_pos, glm::vec2(reg2->size), glm::radians<float>(m_body_rotation + m_barrel_rotation),glm::vec2(0.5,0.0),*reg2);
-            }
-        }
     }
 
     glm::vec2 unit(const float angle) {

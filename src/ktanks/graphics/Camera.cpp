@@ -11,9 +11,9 @@ namespace ktanks {
     }
 
     void Camera::update(const glm::vec2& center, const glm::vec2& view, const float dt) {
-        constexpr float lerpSpeed = 5.0f;
+        constexpr float CAM_SPEED = 4.5f;
         const glm::vec2 target = center - view / 2.f;
-        offset = glm::mix(offset, target, lerpSpeed * dt);
+        offset = glm::mix(offset, target, CAM_SPEED * dt);
     }
 
 }

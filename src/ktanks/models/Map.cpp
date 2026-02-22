@@ -3,8 +3,6 @@
 #include <random>
 #include <spdlog/spdlog.h>
 
-#include "ktanks/graphics/sprite_data/TerrainSprites.h"
-
 namespace ktanks {
 
     Map::Map(const glm::uvec2& size) : m_size(size),
@@ -12,7 +10,7 @@ namespace ktanks {
 
         std::random_device rd;
         std::mt19937 gen(rd());
-        std::uniform_real_distribution<> dis(0.0, 1.0);
+        std::uniform_real_distribution dis(0.0, 1.0);
 
         for(int x = 0; x < size.x; x++) {
             for(int y = 0; y < size.y; y++) {

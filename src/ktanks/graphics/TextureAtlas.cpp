@@ -4,11 +4,11 @@
 
 namespace ktanks {
 
-    TextureAtlas::TextureAtlas(const glm::uvec2& size) : m_texture(size) {}
+    TextureAtlas::TextureAtlas(const int len, const glm::uvec2& size)
+        : m_texture(size), m_regions(len,{{0,0},{1,1}}) {}
 
     TextureAtlas::TextureAtlas(TextureAtlas&& other) noexcept
-    : m_texture(std::move(other.m_texture)),
-      m_regions(std::move(other.m_regions)) {}
+        : m_texture(std::move(other.m_texture)), m_regions(std::move(other.m_regions)) {}
 
     TextureAtlas& TextureAtlas::operator=(TextureAtlas&& other) noexcept {
         if (this != &other) {
@@ -19,6 +19,22 @@ namespace ktanks {
     }
 
     std::size_t TextureAtlas::insert(const glm::uvec2& pos, const glm::uvec2& size, const void* data) {
+        const int id = static_cast<int>(m_regions.size()) - 1;
+        insert(id,pos,size,data);
+        return id;
+    }
+
+    void TextureAtlas::reserve(const int i) {
+        m_regions.reserve(i);
+    }
+
+    bool TextureAtlas::insert(const int id, const glm::uvec2& pos, const glm::uvec2& size, const void* data) {
+        if (pos.x + size.x > m_texture.getWidth() ||
+            pos.y + size.y > m_texture.getHeight() ||
+            id >= m_regions.capacity())
+        {
+            return false;
+        }
         m_texture.bind();
 
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -54,9 +70,10 @@ namespace ktanks {
 
         reg.size = size;
 
-        m_regions.push_back(reg);
-        return  m_regions.size() - 1;
+        m_regions[id] = reg;
+        return true;
     }
+
 
     std::optional<Region> TextureAtlas::at(const std::size_t x) const {
         if (x < m_regions.size()) {
