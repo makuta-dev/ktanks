@@ -57,6 +57,9 @@ namespace ktanks {
     }
 
     void Renderer::setViewMatrix(const glm::mat4 &view) {
+        if (m_view != view) {
+            flush();
+        }
         m_view = view;
     }
 
@@ -82,8 +85,7 @@ namespace ktanks {
 
         glBindVertexArray(0);
 
-        m_vertices.clear();
-        m_indices.clear();
+        beginFrame();
     }
 
     void Renderer::setTexture(const uint32_t texture_id, const bool is_text) {

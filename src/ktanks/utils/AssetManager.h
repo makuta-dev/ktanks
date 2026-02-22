@@ -12,7 +12,7 @@ namespace ktanks {
 
     class AssetManager final {
     public:
-        explicit AssetManager(std::string  assets_root = ASSETS_ROOT);
+        explicit AssetManager(std::string assets_root = ASSETS_ROOT);
 
         [[nodiscard]] Shader getShader(const std::string& name) const;
         [[nodiscard]] Texture getTexture(const std::string& name) const;

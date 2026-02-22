@@ -103,8 +103,8 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 ### 🎨 Phase 2: Rendering & Entities
 
 * [x] **Sprite Renderer:** Build a generic system to draw textures with rotation and scaling.
-* [ ] **Tank Chassis:** Render and move the base tank using WASD/Arrow keys.
-* [ ] **Turret Logic:** Implement independent turret rotation that tracks the mouse cursor.
+* [x] **Tank Chassis:** Render and move the base tank using WASD/Arrow keys.
+* [x] **Turret Logic:** Implement independent turret rotation that tracks the mouse cursor.
 * [ ] **Layering:** Ensure proper draw order (Tracks < Chassis < Turret).
 
 ### 🕹️ Phase 3: Gameplay Systems
@@ -126,7 +126,7 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 ### 📈 Current Milestone
 
 **Status:** `Phase 2: Rendering & Entities`  
-**Progress:** `[▓▓▓░░░░░░░] 30%`
+**Progress:** `[▓▓▓▓▓▓▓░░░] 70%`
 
 <!-- ▓░ -->
 

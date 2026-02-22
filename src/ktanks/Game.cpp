@@ -53,6 +53,7 @@ namespace ktanks {
         }
         tank.onDraw(r);
 
+        r.setViewMatrix(glm::mat4{1.f});
         r.drawText(std::format("{:3.2f}",fps),{0,16},{1,1,1},font);
     }
 
