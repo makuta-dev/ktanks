@@ -1,24 +1,19 @@
 #ifndef KTANKS_TANK_H
 #define KTANKS_TANK_H
 
-#include <glm/vec2.hpp>
-
-#include "ktanks/core/constants/TankData.h"
+#include "ktanks/core/Entity.h"
+#include "ktanks/core/data/TankData.h"
 
 namespace ktanks {
 
-    class Tank final {
+    class Tank final : public Entity {
     public:
-        Tank(const glm::vec2& pos, TankColor);
+        explicit Tank(TankColor);
 
         void onUpdate(float dt);
         void move(uint8_t);
 
-        [[nodiscard]] glm::vec2 getPosition() const;
-
     private:
-        glm::vec2 m_pos;
-        glm::vec2 m_vel;
         float m_body_rotation{0.f};
         float m_barrel_rotation{0.f};
     };

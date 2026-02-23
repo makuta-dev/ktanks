@@ -1,12 +1,11 @@
 #include "Game.h"
 
-#include "core/constants/TankData.h"
-#include "core/constants/TerrainData.h"
+#include "core/data/TankData.h"
 
 namespace ktanks {
 
     Game::Game(AssetManager &asset_manager){
-        atlas = &asset_manager.getTextureAtlas(AtlasID::Terrain);
+        atlas = &asset_manager.getTextureAtlas(AtlasID::Tanks);
     }
 
     Game::~Game() = default;
@@ -19,9 +18,10 @@ namespace ktanks {
         r.setTexture(atlas->getTextureID());
         r.drawSprite({0,0},{512,512},{{0,0},{1,1}});
 
-        const auto tile = static_cast<int>(TerrainSprite::GCrossingRound);
+        const auto color = static_cast<int>(TankColor::Blue);
+        const auto part = static_cast<int>(TankSprites::Body);
 
-        if (const auto reg = atlas->at(tile)) {
+        if (const auto reg = atlas->at(color*5 + part)) {
             r.drawSprite({600,100},{128,128},*reg);
         }
     }

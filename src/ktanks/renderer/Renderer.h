@@ -9,7 +9,7 @@
 
 namespace ktanks {
 
-    class Renderer final {
+    class Renderer {
     public:
         explicit Renderer(AssetManager&);
         ~Renderer();

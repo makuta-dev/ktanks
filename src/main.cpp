@@ -1,6 +1,6 @@
 #include <chrono>
 
-#include "ktanks/graphics/Renderer.h"
+#include "ktanks/renderer/Renderer.h"
 #include "ktanks/window/Window.h"
 #include "ktanks/Game.h"
 

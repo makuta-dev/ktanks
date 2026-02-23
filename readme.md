@@ -126,7 +126,7 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 ### 📈 Current Milestone
 
 **Status:** `Phase 2: Rendering & Entities`  
-**Progress:** `[▓▓▓▓▓▓▓░░░] 70%`
+**Progress:** `[▓▓▓▓▓▓▓▓▓░] 90%`
 
 <!-- ▓░ -->
 

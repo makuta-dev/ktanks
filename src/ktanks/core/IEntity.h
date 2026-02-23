@@ -1,4 +1,0 @@
-#ifndef KTANKS_IENTITY_H
-#define KTANKS_IENTITY_H
-
-#endif //KTANKS_IENTITY_H

@@ -1,7 +1,7 @@
 #ifndef KTANKS_TANKS_H
 #define KTANKS_TANKS_H
 
-#include "ktanks/graphics/Renderer.h"
+#include "renderer/Renderer.h"
 #include "ktanks/window/Event.h"
 
 namespace ktanks {

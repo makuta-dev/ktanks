@@ -5,7 +5,7 @@
 
 #include <glm/vec2.hpp>
 
-#include "ktanks/core/constants/TerrainData.h"
+#include "ktanks/core/data/TerrainData.h"
 
 namespace ktanks {
 
