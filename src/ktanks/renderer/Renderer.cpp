@@ -115,7 +115,7 @@ namespace ktanks {
         m_indices.push_back(offset + 0);
     }
 
-    void Renderer::drawSprite(const glm::vec2& pos, const glm::vec2& size, float angle, const glm::vec2& center, const Region& region) {
+    void Renderer::drawSprite(const glm::vec2& pos, const glm::vec2& size, const float angle, const glm::vec2& center, const Region& region) {
         const auto [a, b, _] = region;
         const auto offset = static_cast<uint32_t>(m_vertices.size());
 
@@ -171,6 +171,5 @@ namespace ktanks {
             }
         }
     }
-
 
 }

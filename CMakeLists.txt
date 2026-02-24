@@ -20,6 +20,7 @@ add_executable(kTanks
         src/ktanks/core/data/TankData.h
         src/ktanks/core/data/TerrainData.h
 
+        src/ktanks/core/IScreen.h
         src/ktanks/core/Constants.h
         src/ktanks/core/Object.cpp
         src/ktanks/core/Object.h
@@ -50,6 +51,11 @@ add_executable(kTanks
         src/ktanks/renderer/UIRenderer.h
         src/ktanks/renderer/Renderer.cpp
         src/ktanks/renderer/Renderer.h
+
+        src/ktanks/screen/MainScreen.cpp
+        src/ktanks/screen/MainScreen.h
+        src/ktanks/screen/PlayScreen.cpp
+        src/ktanks/screen/PlayScreen.h
 
         src/ktanks/utils/AssetManager.cpp
         src/ktanks/utils/AssetManager.h

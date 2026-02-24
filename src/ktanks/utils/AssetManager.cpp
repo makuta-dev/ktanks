@@ -116,8 +116,21 @@ namespace ktanks {
         uint32_t width;
     };
 
+    glm::uvec2 getAtlasSize(const AtlasID id) {
+        switch (id) {
+            case AtlasID::Terrain:
+                return glm::uvec2(1024);
+            case AtlasID::Tanks:
+                return glm::uvec2(256);
+            case AtlasID::Blocks:
+                return glm::uvec2(128);
+            default:
+                return glm::uvec2(128);
+        }
+    }
+
     TextureAtlas newAtlasFor(const std::string& root, const AtlasID id) {
-        const auto atlas_size = id == AtlasID::Terrain ? glm::uvec2(1024) : glm::uvec2(256);
+        const auto atlas_size = getAtlasSize(id);
         const auto paths = getPaths(root,id);
         std::vector<PackedImage> images;
 

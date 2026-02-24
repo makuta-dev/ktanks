@@ -10,7 +10,7 @@ namespace ktanks {
         Camera() = default;
 
         [[nodiscard]] glm::mat4 getViewMatrix() const;
-        void update(const glm::vec2& center, const glm::vec2& view,const glm::uvec2& mapSize, const float dt);
+        void update(const glm::vec2& center, const glm::vec2& view,const glm::uvec2& mapSize, float dt);
 
     private:
         glm::vec2 offset{0};

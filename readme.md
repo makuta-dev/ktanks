@@ -86,10 +86,11 @@ To keep the repository clean, the project follows this standard layout:
 
 This project utilizes high-quality open-source assets by **Kenney**. These assets allow the focus to remain on the technical implementation of the engine.
 
-| Asset Pack                                                            | Category        | License             |
-|-----------------------------------------------------------------------|-----------------|---------------------|
-| [Top-Down Tanks Redux](https://kenney.nl/assets/top-down-tanks-redux) | Sprites / Tanks | CC0 (Public Domain) |
-| [UI Pack](https://kenney.nl/assets/ui-pack)                           | Interface / HUD | CC0 (Public Domain) |
+| Asset Pack                                                                    | Category        | License              |
+|-------------------------------------------------------------------------------|-----------------|----------------------|
+| [Top-Down Tanks Redux](https://kenney.nl/assets/top-down-tanks-redux)         | Sprites / Tanks | CC0 (Public Domain)  |
+| [Pixel Platformer Blocks](https://kenney.nl/assets/pixel-platformer-blocks)   | Sprites         | CC0 (Public Domain)  |
+| [UI Pack](https://kenney.nl/assets/ui-pack)                                   | Interface / HUD | CC0 (Public Domain)  |
 
 ## 🗺️ Project Roadmap
 
@@ -125,8 +126,8 @@ This project utilizes high-quality open-source assets by **Kenney**. These asset
 
 ### 📈 Current Milestone
 
-**Status:** `Phase 2: Rendering & Entities`  
-**Progress:** `[▓▓▓▓▓▓▓▓▓▓] 100%`
+**Status:** `Phase 3: Gameplay Systems`  
+**Progress:** `[░░░░░░░░░░] 0%`
 
 <!-- ▓░ -->
 
