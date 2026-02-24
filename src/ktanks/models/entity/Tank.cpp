@@ -2,7 +2,7 @@
 
 namespace ktanks {
 
-    Tank::Tank(TankColor) {
+    Tank::Tank(const TankColor c) : m_color(c) {
 
     }
 

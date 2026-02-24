@@ -94,6 +94,13 @@ namespace ktanks {
                 data.push_back(root + "/textures/bullet" + color +"3_outline.png");
             }
         }
+        if (id == AtlasID::Blocks) {
+            for(const auto& color : {"Marble","Rock","Sand","Stone"}) {
+                for (int i = 0; i < 27; i++) {
+                    data.push_back(root + "/textures/blocks/" + color + "/tile_00" + std::to_string(i) + ".png");
+                }
+            }
+        }
         return data;
     }
 

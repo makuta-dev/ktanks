@@ -22,6 +22,7 @@ namespace ktanks {
     enum class AtlasID : uint16_t {
         Terrain,
         Tanks,
+        Blocks,
         Count
     };
 

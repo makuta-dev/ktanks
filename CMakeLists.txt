@@ -38,8 +38,6 @@ add_executable(kTanks
 
         src/ktanks/models/entity/Tank.cpp
         src/ktanks/models/entity/Tank.h
-        src/ktanks/models/Map.cpp
-        src/ktanks/models/Map.h
 
         src/ktanks/renderer/GameRenderer.cpp
         src/ktanks/renderer/GameRenderer.h
@@ -60,6 +58,10 @@ add_executable(kTanks
 
         src/main.cpp
         src/ktanks/core/Constants.h
+        src/ktanks/models/Level.cpp
+        src/ktanks/models/Level.h
+        src/ktanks/models/LevelMap.h
+        src/ktanks/core/data/BlockData.h
 )
 
 target_include_directories(kTanks PRIVATE src)

@@ -14,6 +14,7 @@ namespace ktanks {
         void move(uint8_t);
 
     private:
+        TankColor m_color;
         float m_body_rotation{0.f};
         float m_barrel_rotation{0.f};
     };
