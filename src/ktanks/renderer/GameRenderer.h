@@ -1,7 +1,7 @@
 #ifndef KTANKS_GAMERENDERER_H
 #define KTANKS_GAMERENDERER_H
 
-#include "ktanks/models/Map.h"
+#include "ktanks/models/Level.h"
 #include "ktanks/models/entity/Tank.h"
 #include "ktanks/renderer/Renderer.h"
 #include "ktanks/utils/AssetManager.h"
@@ -14,7 +14,7 @@ namespace ktanks {
         ~GameRenderer();
 
         void drawTank(const Tank&);
-        void drawMap(const Map&);
+        void drawLevel(const Level&);
 
     private:
         TextureAtlas* m_tank_atlas;

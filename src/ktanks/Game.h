@@ -1,8 +1,10 @@
 #ifndef KTANKS_TANKS_H
 #define KTANKS_TANKS_H
 
-#include "renderer/Renderer.h"
+#include "graphics/Camera.h"
 #include "ktanks/window/Event.h"
+#include "ktanks/renderer/Renderer.h"
+#include "ktanks/renderer/GameRenderer.h"
 
 namespace ktanks {
 
@@ -17,7 +19,9 @@ namespace ktanks {
 
     private:
         glm::uvec2 view{0};
-        TextureAtlas* atlas;
+        Tank m_player;
+        Camera m_camera;
+        GameRenderer m_game_renderer;
     };
 
 }

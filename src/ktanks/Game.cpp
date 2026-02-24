@@ -4,31 +4,28 @@
 
 namespace ktanks {
 
-    Game::Game(AssetManager &asset_manager){
-        atlas = &asset_manager.getTextureAtlas(AtlasID::Tanks);
+    Game::Game(AssetManager &asset_manager) : m_player(TankColor::Green), m_game_renderer(asset_manager) {
+        m_player.setPos({200,200});
     }
 
     Game::~Game() = default;
 
     void Game::onUpdate(const float dt) {
-
+        m_player.onUpdate(dt);
+        m_camera.update(m_player.getPos(),view, dt);
     }
 
     void Game::onDraw(Renderer& r) {
-        r.setTexture(atlas->getTextureID());
-        r.drawSprite({0,0},{512,512},{{0,0},{1,1}});
-
-        const auto color = static_cast<int>(TankColor::Blue);
-        const auto part = static_cast<int>(TankSprites::Body);
-
-        if (const auto reg = atlas->at(color*5 + part)) {
-            r.drawSprite({600,100},{128,128},*reg);
-        }
+        m_game_renderer.beginFrame();
+        m_game_renderer.setViewMatrix(m_camera.getViewMatrix());
+        m_game_renderer.drawTank(m_player);
+        m_game_renderer.endFrame();
     }
 
     void Game::onEvent(const Event& e) {
         if (e.type == EventType::WindowResize) {
             view = glm::uvec2(e.onWResize.width, e.onWResize.height);
+            m_game_renderer.resize(e.onWResize.width, e.onWResize.height);
         }
     }
 

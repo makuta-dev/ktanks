@@ -16,9 +16,11 @@ add_subdirectory(libs/glad)
 add_subdirectory(libs/libspng)
 
 add_executable(kTanks
+        src/ktanks/core/data/BlockData.h
         src/ktanks/core/data/TankData.h
         src/ktanks/core/data/TerrainData.h
 
+        src/ktanks/core/Constants.h
         src/ktanks/core/Object.cpp
         src/ktanks/core/Object.h
         src/ktanks/core/Entity.cpp
@@ -38,6 +40,9 @@ add_executable(kTanks
 
         src/ktanks/models/entity/Tank.cpp
         src/ktanks/models/entity/Tank.h
+        src/ktanks/models/Level.cpp
+        src/ktanks/models/Level.h
+        src/ktanks/models/LevelMap.h
 
         src/ktanks/renderer/GameRenderer.cpp
         src/ktanks/renderer/GameRenderer.h
@@ -57,11 +62,6 @@ add_executable(kTanks
         src/ktanks/Game.h
 
         src/main.cpp
-        src/ktanks/core/Constants.h
-        src/ktanks/models/Level.cpp
-        src/ktanks/models/Level.h
-        src/ktanks/models/LevelMap.h
-        src/ktanks/core/data/BlockData.h
 )
 
 target_include_directories(kTanks PRIVATE src)

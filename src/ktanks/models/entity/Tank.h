@@ -11,7 +11,10 @@ namespace ktanks {
         explicit Tank(TankColor);
 
         void onUpdate(float dt);
-        void move(uint8_t);
+
+        [[nodiscard]] TankColor getColor() const;
+        [[nodiscard]] float getBodyRotation() const;
+        [[nodiscard]] float getBarrelRotation() const;
 
     private:
         TankColor m_color;
