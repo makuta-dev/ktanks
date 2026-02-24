@@ -1,18 +1,19 @@
 #include "Game.h"
 
+#include "core/Constants.h"
 #include "core/data/TankData.h"
 
 namespace ktanks {
 
     Game::Game(AssetManager &asset_manager) : m_player(TankColor::Green), m_level({16,16}), m_game_renderer(asset_manager) {
-        m_player.setPos({200,200});
+        m_player.setPos(TILE_SIZE);
     }
 
     Game::~Game() = default;
 
     void Game::onUpdate(const float dt) {
         m_player.onUpdate(dt);
-        m_camera.update(m_player.getPos(),view, dt);
+        m_camera.update(m_player.getPos(),view, glm::vec2(m_level.getSize()) * TILE_SIZE ,dt);
     }
 
     void Game::onDraw() {
