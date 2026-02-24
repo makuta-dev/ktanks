@@ -125,7 +125,7 @@ namespace ktanks {
             case AtlasID::Blocks:
                 return glm::uvec2(128);
             default:
-                return glm::uvec2(128);
+                return glm::uvec2(0);
         }
     }
 
@@ -270,10 +270,6 @@ namespace ktanks {
         return "";
     }
 
-    std::string getNameBy(TextureID) {
-        return "";
-    }
-
     AssetManager::AssetManager(std::string assets_root) : m_root(std::move(assets_root)){}
 
     Shader& AssetManager::getShader(const ShaderID id) {
@@ -286,18 +282,6 @@ namespace ktanks {
         }
 
         return *m_shaders[index];
-    }
-
-    Texture& AssetManager::getTexture(const TextureID id) {
-        const auto index = static_cast<size_t>(id);
-
-        if (!m_textures[index]) {
-            m_textures[index] = std::make_unique<Texture>(
-                std::move(Texture::loadFile(m_root + "/textures/" + getNameBy(id) + ".png"))
-            );
-        }
-
-        return *m_textures[index];
     }
 
     TextureAtlas& AssetManager::getTextureAtlas(AtlasID id) {

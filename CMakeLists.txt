@@ -68,6 +68,8 @@ add_executable(kTanks
         src/ktanks/Game.h
 
         src/main.cpp
+        src/ktanks/screen/EditorScreen.cpp
+        src/ktanks/screen/EditorScreen.h
 )
 
 target_include_directories(kTanks PRIVATE src)

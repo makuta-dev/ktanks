@@ -15,10 +15,6 @@ namespace ktanks {
         Count
     };
 
-    enum class TextureID : uint16_t {
-        Count
-    };
-
     enum class AtlasID : uint16_t {
         Terrain,
         Tanks,
@@ -31,7 +27,6 @@ namespace ktanks {
         explicit AssetManager(std::string assets_root = ASSETS_ROOT);
 
         Shader& getShader(ShaderID);
-        Texture& getTexture(TextureID);
         TextureAtlas& getTextureAtlas(AtlasID);
         Font& getFont();
 
@@ -40,9 +35,6 @@ namespace ktanks {
 
         std::array<std::unique_ptr<Shader>,
             static_cast<size_t>(ShaderID::Count)> m_shaders{};
-
-        std::array<std::unique_ptr<Texture>,
-            static_cast<size_t>(TextureID::Count)> m_textures{};
 
         std::array<std::unique_ptr<TextureAtlas>,
             static_cast<size_t>(AtlasID::Count)> m_atlases{};
