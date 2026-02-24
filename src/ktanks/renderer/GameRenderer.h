@@ -17,12 +17,14 @@ namespace ktanks {
         void drawLevel(const Level&);
 
     private:
+        void drawTerrain(const LevelMap<TerrainSprite>&);
+        void drawBlocks(const LevelMap<BlockID>&);
+
         TextureAtlas* m_tank_atlas;
         TextureAtlas* m_block_atlas;
         TextureAtlas* m_terrain_atlas;
     };
 
 }
-
 
 #endif //KTANKS_GAMERENDERER_H

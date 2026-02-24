@@ -9,22 +9,25 @@ namespace ktanks {
     template<typename T>
     class LevelMap final {
     public:
-        LevelMap() : LevelMap({1,1}){}
+        explicit LevelMap(const glm::uvec2& size, const T& init = T{})
+            : m_size(size), m_data(size.x * size.y, init) {}
 
-        explicit LevelMap(const glm::uvec2& size) : m_size(size), m_data(size.x * size.y,static_cast<T>(0)){}
-
-        T get(const glm::uvec2& pos) const {
-            if (pos.x < m_size.x || pos.y < m_size.y) {
-                return m_data[pos.y * m_size.x + pos.x];
-            }
-            return static_cast<T>(0);
+        [[nodiscard]] bool isInBounds(const glm::uvec2& pos) const {
+            return pos.x < m_size.x && pos.y < m_size.y;
         }
 
-        void set(const glm::uvec2& pos, T value) {
-            if (pos.x < m_size.x || pos.y < m_size.y) {
+        const T& get(const glm::uvec2& pos) const {
+            assert(isInBounds(pos) && "Out of bounds map access!");
+            return m_data[pos.y * m_size.x + pos.x];
+        }
+
+        void set(const glm::uvec2& pos, const T& value) {
+            if (isInBounds(pos)) {
                 m_data[pos.y * m_size.x + pos.x] = value;
             }
         }
+
+        [[nodiscard]] glm::uvec2 getSize() const { return m_size; }
 
     private:
         glm::uvec2 m_size;

@@ -2,6 +2,8 @@
 
 #include <glm/ext/matrix_transform.hpp>
 
+#include "ktanks/core/Constants.h"
+
 namespace ktanks {
 
     glm::mat4 Camera::getViewMatrix() const {
@@ -11,9 +13,8 @@ namespace ktanks {
     }
 
     void Camera::update(const glm::vec2& center, const glm::vec2& view, const float dt) {
-        constexpr float CAM_SPEED = 4.5f;
         const glm::vec2 target = center - view / 2.f;
-        offset = glm::mix(offset, target, CAM_SPEED * dt);
+        offset = glm::mix(offset, target, CAMERA_SPEED * dt);
     }
 
 }

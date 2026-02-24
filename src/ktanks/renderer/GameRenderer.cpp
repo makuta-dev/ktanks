@@ -1,6 +1,9 @@
 #include "GameRenderer.h"
 
 #include <glm/trigonometric.hpp>
+#include <spdlog/spdlog.h>
+
+#include "ktanks/core/Constants.h"
 
 namespace ktanks {
 
@@ -25,8 +28,36 @@ namespace ktanks {
         }
     }
 
-    void GameRenderer::drawLevel(const Level&) {
-        //TODO(drawLevel)
+    void GameRenderer::drawLevel(const Level& l) {
+        drawTerrain(l.getTerrain());
+        drawBlocks(l.getBlocks());
     }
+
+    void GameRenderer::drawTerrain(const LevelMap<TerrainSprite>& data) {
+        setTexture(m_terrain_atlas->getTextureID());
+        for (int y = 0; y < data.getSize().y; y++) {
+            for (int x = 0; x < data.getSize().x; x++) {
+                const auto pos = glm::uvec2(x,y);
+                const auto tile = static_cast<int>(data.get(pos));
+                if (const auto tile_req = m_terrain_atlas->at(tile)) {
+                    drawSprite(glm::vec2(pos) * TILE_SIZE,TILE_SIZE,*tile_req);
+                }
+            }
+        }
+    }
+
+    void GameRenderer::drawBlocks(const LevelMap<BlockID>& data) {
+        setTexture(m_block_atlas->getTextureID());
+        for (int y = 0; y < data.getSize().y; y++) {
+            for (int x = 0; x < data.getSize().x; x++) {
+                const auto pos = glm::uvec2(x,y);
+                const auto tile = static_cast<int>(data.get(pos));
+                if (const auto tile_req = m_block_atlas->at(tile)) {
+                    drawSprite(glm::vec2(pos) * BLOCK_SIZE,BLOCK_SIZE,*tile_req);
+                }
+            }
+        }
+    }
+
 
 }

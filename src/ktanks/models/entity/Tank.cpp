@@ -1,6 +1,7 @@
 #include "Tank.h"
 
 #include <cmath>
+#include <glm/common.hpp>
 #include <glm/trigonometric.hpp>
 
 #include "ktanks/core/Constants.h"
@@ -8,9 +9,7 @@
 
 namespace ktanks {
 
-    Tank::Tank(const TankColor c) : m_color(c) {
-
-    }
+    Tank::Tank(const TankColor c) : m_color(c) {}
 
     void Tank::onUpdate(const float dt) {
         if (Window::isPressed(SDL_SCANCODE_W)) {
@@ -33,8 +32,22 @@ namespace ktanks {
         if (Window::isPressed(SDL_SCANCODE_A)) m_body_rotation -= BODY_TURN_SPEED * dt;
         if (Window::isPressed(SDL_SCANCODE_D)) m_body_rotation += BODY_TURN_SPEED * dt;
 
-        if (Window::isPressed(SDL_SCANCODE_LEFT))  m_barrel_rotation -= BARREL_TURN_SPEED * dt;
-        if (Window::isPressed(SDL_SCANCODE_RIGHT)) m_barrel_rotation += BARREL_TURN_SPEED * dt;
+        if (Window::isPressed(SDL_SCANCODE_LEFT)) {
+            m_barrel_rotation -= BARREL_TURN_SPEED * dt;
+            if (m_barrel_rotation < -45.f)
+                m_barrel_rotation = -45.f;
+        }
+        if (Window::isPressed(SDL_SCANCODE_RIGHT)){
+            m_barrel_rotation += BARREL_TURN_SPEED * dt;
+            if (m_barrel_rotation > 45.f)
+                m_barrel_rotation = 45.f;
+        }
+        if (Window::isPressed(SDL_SCANCODE_DOWN)) {
+            if (std::abs(m_barrel_rotation) > 0.01f){
+                float dir = glm::sign(m_barrel_rotation);
+                m_barrel_rotation -= dir * BARREL_TURN_SPEED * dt;
+            }
+        }
     }
 
     TankColor Tank::getColor() const {

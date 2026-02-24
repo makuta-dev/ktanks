@@ -29,11 +29,13 @@ namespace ktanks {
     private:
         void flush();
 
+        bool m_is_text{false};
         uint32_t m_vao{0};
         uint32_t m_vbo{0};
         uint32_t m_ebo{0};
         uint32_t m_texture{0};
         Shader* m_shader;
+        glm::vec3 m_color{1.f};
         std::vector<Vertex> m_vertices;
         std::vector<uint32_t> m_indices;
         glm::mat4 m_projection{1.f};

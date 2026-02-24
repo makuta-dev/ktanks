@@ -4,7 +4,7 @@
 
 namespace ktanks {
 
-    Game::Game(AssetManager &asset_manager) : m_player(TankColor::Green), m_game_renderer(asset_manager) {
+    Game::Game(AssetManager &asset_manager) : m_player(TankColor::Green), m_level({16,16}), m_game_renderer(asset_manager) {
         m_player.setPos({200,200});
     }
 
@@ -15,8 +15,9 @@ namespace ktanks {
         m_camera.update(m_player.getPos(),view, dt);
     }
 
-    void Game::onDraw(Renderer& r) {
+    void Game::onDraw() {
         m_game_renderer.beginFrame();
+        m_game_renderer.drawLevel(m_level);
         m_game_renderer.setViewMatrix(m_camera.getViewMatrix());
         m_game_renderer.drawTank(m_player);
         m_game_renderer.endFrame();

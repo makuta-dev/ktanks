@@ -13,9 +13,7 @@ int main() {
     const auto size = window.getSize();
     auto asset_manager = ktanks::AssetManager();
     auto tanks = ktanks::Game(asset_manager);
-    auto renderer = ktanks::Renderer(asset_manager);
     {
-        renderer.resize(size.x, size.y);
         tanks.onEvent({
             .type = ktanks::EventType::WindowResize,
             .onWResize = {
@@ -40,16 +38,10 @@ int main() {
             if (e.type == ktanks::EventType::WindowClose) {
                 window.close();
             }
-            if (e.type == ktanks::EventType::WindowResize) {
-                renderer.resize(e.onWResize.width, e.onWResize.height);
-            }
         }
+
         glClear(GL_COLOR_BUFFER_BIT);
-
-        renderer.beginFrame();
-        tanks.onDraw(renderer);
-        renderer.endFrame();
-
+        tanks.onDraw();
         window.swapBuffers();
     }
     return 0;

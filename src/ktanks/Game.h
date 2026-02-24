@@ -14,12 +14,13 @@ namespace ktanks {
         ~Game();
 
         void onUpdate(float dt);
-        void onDraw(Renderer&);
+        void onDraw();
         void onEvent(const Event &);
 
     private:
         glm::uvec2 view{0};
         Tank m_player;
+        Level m_level;
         Camera m_camera;
         GameRenderer m_game_renderer;
     };

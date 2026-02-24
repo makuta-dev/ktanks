@@ -69,6 +69,8 @@ namespace ktanks {
         m_shader->use();
         m_shader->setMat4("proj", m_projection);
         m_shader->setMat4("view", m_view);
+        m_shader->setInt("is_text", m_is_text);
+        m_shader->setVec3("text_col", m_color);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, m_texture);
@@ -89,11 +91,11 @@ namespace ktanks {
     }
 
     void Renderer::setTexture(const uint32_t texture_id, const bool is_text) {
-        if (m_texture != texture_id) {
+        if (m_texture != texture_id || m_is_text != is_text) {
             flush();
         }
         m_texture = texture_id;
-        m_shader->setInt("is_text", is_text);
+        m_is_text = is_text;
     }
 
     void Renderer::drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region& region) {
@@ -155,7 +157,7 @@ namespace ktanks {
 
     void Renderer::drawText(const std::string& text, const glm::vec2& pos, const glm::vec3& color, const Font& font) {
         setTexture(font.getTextureID(),true);
-        m_shader->setVec3("text_col", color);
+        m_color = color;
         auto p = pos;
         for (const auto& c : text) {
             if (const auto glyph = font.get(c)) {
