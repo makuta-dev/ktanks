@@ -17,15 +17,17 @@ namespace ktanks {
 
     enum class AtlasID : uint16_t {
         Terrain,
-        Tanks,
         Blocks,
+        Tanks,
         GUI,
         Count
     };
 
     enum class FontID : uint16_t {
+        BoldItalic,
         Regular,
-        Narrow,
+        Italic,
+        Bold,
         Count
     };
 

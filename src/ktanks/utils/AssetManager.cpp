@@ -331,13 +331,18 @@ namespace ktanks {
     }
 
     std::string getFontPath(const FontID id) {
-        if (id == FontID::Regular) {
-            return "fonts/Kenney_Future.ttf";
+        switch (id) {
+            case FontID::BoldItalic:
+                return "fonts/OpenSans-BoldItalic.ttf";
+            case FontID::Regular:
+                return "fonts/OpenSans-Regular.ttf";
+            case FontID::Italic:
+                return "fonts/OpenSans-Italic.ttf";
+            case FontID::Bold:
+                return "fonts/OpenSans-Bold.ttf";
+            default:
+                return "";
         }
-        if (id == FontID::Narrow) {
-            return "fonts/Kenney_Future_Narrow.ttf";
-        }
-        return "";
     }
 
     Font& AssetManager::getFont(FontID id) {

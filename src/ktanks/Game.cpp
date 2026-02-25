@@ -4,7 +4,7 @@ namespace ktanks {
 
     Game::Game() : m_renderer(m_assets) {
         m_gui = &m_assets.getTextureAtlas(AtlasID::GUI);
-        m_font = &m_assets.getFont(FontID::Narrow);
+        m_font = &m_assets.getFont(FontID::Bold);
         m_font2 = &m_assets.getFont(FontID::Regular);
     }
     Game::~Game() = default;
