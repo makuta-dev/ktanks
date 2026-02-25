@@ -4,9 +4,11 @@
 #include <memory>
 #include <glm/vec2.hpp>
 
+#include "ktanks/graphics/Renderer.h"
+#include "ktanks/window/Event.h"
+
 namespace ktanks {
 
-    struct Event;
     class IScreen;
 
     using ScreenPtr = std::unique_ptr<IScreen>;
@@ -32,7 +34,7 @@ namespace ktanks {
 
         virtual void onInit(){}
         virtual void onUpdate(float dt) = 0;
-        virtual void onDraw() = 0;
+        virtual void onDraw(Renderer&) = 0;
         virtual void onEvent(const Event&) = 0;
 
         [[nodiscard]] ScreenManager& getManager() const {

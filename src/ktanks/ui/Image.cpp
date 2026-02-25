@@ -12,7 +12,7 @@ namespace ktanks {
 
     Image::~Image() = default;
 
-    void Image::onRender(UIRenderer &renderer) {
+    void Image::onRender(Renderer &renderer) {
         if (is_icon) {
             renderer.icon(getAbsolutePosition(),getSize(),m_icon);
         } else {

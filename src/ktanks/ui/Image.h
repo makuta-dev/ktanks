@@ -11,7 +11,7 @@ namespace ktanks {
         explicit Image(GuiSprites, const glm::vec2& size);
         ~Image() override;
 
-        void onRender(UIRenderer &renderer) override;
+        void onRender(Renderer &renderer) override;
     private:
         bool is_icon{true};
         Icon m_icon;

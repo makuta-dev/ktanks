@@ -4,7 +4,7 @@
 #include <glm/vec2.hpp>
 #include <ranges>
 
-#include "ktanks/renderer/UIRenderer.h"
+#include "ktanks/graphics/Renderer.h"
 #include "ktanks/window/Event.h"
 
 namespace ktanks {
@@ -19,7 +19,7 @@ namespace ktanks {
                 child->onUpdate(dt);
         }
 
-        virtual void onRender(UIRenderer& renderer){
+        virtual void onRender(Renderer& renderer){
             for (const auto& child : m_children)
                 child->onRender(renderer);
         }

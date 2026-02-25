@@ -35,6 +35,8 @@ add_executable(kTanks
         src/ktanks/graphics/Font.h
         src/ktanks/graphics/Shader.cpp
         src/ktanks/graphics/Shader.h
+        src/ktanks/graphics/Renderer.cpp
+        src/ktanks/graphics/Renderer.h
         src/ktanks/graphics/Texture.cpp
         src/ktanks/graphics/Texture.h
         src/ktanks/graphics/TextureAtlas.cpp
@@ -46,13 +48,6 @@ add_executable(kTanks
         src/ktanks/models/Level.cpp
         src/ktanks/models/Level.h
         src/ktanks/models/LevelMap.h
-
-        src/ktanks/renderer/GameRenderer.cpp
-        src/ktanks/renderer/GameRenderer.h
-        src/ktanks/renderer/UIRenderer.cpp
-        src/ktanks/renderer/UIRenderer.h
-        src/ktanks/renderer/Renderer.cpp
-        src/ktanks/renderer/Renderer.h
 
         src/ktanks/screen/EditorScreen.cpp
         src/ktanks/screen/EditorScreen.h

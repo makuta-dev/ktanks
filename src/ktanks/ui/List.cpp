@@ -36,7 +36,7 @@ namespace ktanks {
         }
     }
 
-    void List::onRender(UIRenderer& renderer) {
+    void List::onRender(Renderer& renderer) {
         if (!m_isActive) return;
 
         IWidget::onRender(renderer);

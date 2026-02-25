@@ -3,7 +3,10 @@
 
 #include <cstdint>
 
+#include "ktanks/core/data/GuiData.h"
 #include "ktanks/graphics/Vertex.h"
+#include "ktanks/models/entity/Tank.h"
+#include "ktanks/models/Level.h"
 #include "ktanks/utils/AssetManager.h"
 
 namespace ktanks {
@@ -25,6 +28,20 @@ namespace ktanks {
         void drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region&);
         void drawText(const std::string& text, const glm::vec2& pos, const glm::vec3& color, const Font& font);
 
+        void drawTank(const Tank&);
+        void drawLevel(const Level&);
+        void drawTerrain(const LevelMap<TerrainSprite>&);
+        void drawBlocks(const LevelMap<BlockID>&);
+
+        void text(const std::string& text, const glm::vec2& pos, const glm::vec3& col);
+        void textCentered(const std::string& text, const glm::vec2& pos, const glm::vec3& col);
+
+        void icon(const glm::vec2& pos, const glm::vec2& size, Icon icon);
+        void draw(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite);
+        void drawPatch(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite, float margin = 16.0f);
+
+        [[nodiscard]] glm::vec2 measureText(const std::string& text) const;
+
     private:
         void flush();
 
@@ -39,6 +56,7 @@ namespace ktanks {
         std::vector<uint32_t> m_indices;
         glm::mat4 m_projection{1.f};
         glm::mat4 m_view{1.f};
+        AssetManager& m_assets;
     };
 
 }

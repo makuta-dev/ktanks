@@ -15,7 +15,7 @@ namespace ktanks {
         Button(std::string label, ClickCallback callback);
 
         void onUpdate(float dt) override;
-        void onRender(UIRenderer& renderer) override;
+        void onRender(Renderer& renderer) override;
         bool onEvent(const Event& event) override;
 
     protected:

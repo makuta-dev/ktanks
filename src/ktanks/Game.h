@@ -22,6 +22,7 @@ namespace ktanks {
     private:
         glm::uvec2 m_view{};
         AssetManager m_assets;
+        Renderer m_renderer;
         std::unique_ptr<IScreen> m_screen;
     };
 

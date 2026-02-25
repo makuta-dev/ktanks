@@ -5,9 +5,10 @@
 
 namespace ktanks {
 
-    Game::Game() {
+    Game::Game() : m_assets(), m_renderer(m_assets){
         m_screen = std::make_unique<MainScreen>(m_assets, this);
     }
+
     Game::~Game() = default;
 
     void Game::onInit() {
@@ -19,12 +20,15 @@ namespace ktanks {
     }
 
     void Game::onDraw() {
-        m_screen->onDraw();
+        m_renderer.beginFrame();
+        m_screen->onDraw(m_renderer);
+        m_renderer.endFrame();
     }
 
     void Game::onEvent(const Event& e) {
         if (e.type == EventType::WindowResize) {
             m_view = glm::uvec2(e.onWResize.width, e.onWResize.height);
+            m_renderer.resize(e.onWResize.width, e.onWResize.height);
         }
         m_screen->onEvent(e);
     }

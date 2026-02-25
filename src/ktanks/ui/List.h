@@ -15,7 +15,7 @@ namespace ktanks {
         void setPadding(const float padding) { m_padding = padding; invalidateLayout(); }
 
         void performLayout() override;
-        void onRender(UIRenderer& renderer) override;
+        void onRender(Renderer& renderer) override;
 
     private:
         Orientation m_orientation;

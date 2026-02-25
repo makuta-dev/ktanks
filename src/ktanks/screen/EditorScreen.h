@@ -12,7 +12,7 @@ namespace ktanks {
         ~EditorScreen() override;
 
         void onUpdate(float dt) override;
-        void onDraw() override;
+        void onDraw(Renderer&) override;
         void onEvent(const Event &) override;
     };
 

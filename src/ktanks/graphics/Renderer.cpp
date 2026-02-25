@@ -3,10 +3,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "glad/gl.h"
+#include "ktanks/core/Constants.h"
 
 namespace ktanks {
 
-    Renderer::Renderer(AssetManager& asset_manager) {
+    Renderer::Renderer(AssetManager& asset_manager) : m_assets(asset_manager) {
         m_shader = &asset_manager.getShader(ShaderID::Default);
 
         glGenVertexArrays(1, &m_vao);
@@ -169,6 +170,131 @@ namespace ktanks {
                 p.x += static_cast<float>(glyph->advance);
             }
         }
+    }
+
+    void Renderer::drawTank(const Tank& t) {
+        const auto m_tank_atlas = &m_assets.getTextureAtlas(AtlasID::Tanks);
+        const auto color = static_cast<int>(t.getColor());
+        setTexture(m_tank_atlas->getTextureID());
+        if (const auto body_req = m_tank_atlas->at(color * 5 + static_cast<int>(TankSprites::Body))) {
+            const auto body_rot = glm::radians(t.getBodyRotation() - 90.f);
+            drawSprite(t.getPos(),body_req->size,body_rot,glm::vec2{0.5},*body_req);
+            if (const auto barrel_req = m_tank_atlas->at(color * 5 + static_cast<int>(TankSprites::Barrel))) {
+                const auto barrel_rot = body_rot + glm::radians(t.getBarrelRotation());
+                drawSprite(t.getPos(),barrel_req->size,barrel_rot,glm::vec2{0.5, 0.1},*barrel_req);
+            }
+        }
+    }
+
+    void Renderer::drawLevel(const Level& l) {
+        drawTerrain(l.getTerrain());
+        drawBlocks(l.getBlocks());
+    }
+
+    void Renderer::drawTerrain(const LevelMap<TerrainSprite>& data) {
+        const auto m_terrain_atlas = &m_assets.getTextureAtlas(AtlasID::Terrain);
+        setTexture(m_terrain_atlas->getTextureID());
+        for (int y = 0; y < data.getSize().y; y++) {
+            for (int x = 0; x < data.getSize().x; x++) {
+                const auto pos = glm::uvec2(x,y);
+                const auto tile = static_cast<int>(data.get(pos));
+                if (const auto tile_req = m_terrain_atlas->at(tile)) {
+                    drawSprite(glm::vec2(pos) * TILE_SIZE,TILE_SIZE,*tile_req);
+                }
+            }
+        }
+    }
+
+    void Renderer::drawBlocks(const LevelMap<BlockID>& data) {
+        const auto m_block_atlas = &m_assets.getTextureAtlas(AtlasID::Blocks);
+        setTexture(m_block_atlas->getTextureID());
+        for (int y = 0; y < data.getSize().y; y++) {
+            for (int x = 0; x < data.getSize().x; x++) {
+                const auto pos = glm::uvec2(x,y);
+                const auto tile = static_cast<int>(data.get(pos));
+                if (const auto tile_req = m_block_atlas->at(tile)) {
+                    drawSprite(glm::vec2(pos) * BLOCK_SIZE,BLOCK_SIZE,*tile_req);
+                }
+            }
+        }
+    }
+
+    void Renderer::text(const std::string& text, const glm::vec2& pos, const glm::vec3& col) {
+        const auto m_font = &m_assets.getFont(FontID::Regular);
+        drawText(text, pos, col, *m_font);
+    }
+
+    void Renderer::textCentered(const std::string& text, const glm::vec2& pos, const glm::vec3& col) {
+        const auto m_font = &m_assets.getFont(FontID::Regular);
+        const auto size = m_font->measureText(text);
+        drawText(text, pos - size / 2.f, col, *m_font);
+    }
+
+    void Renderer::icon(const glm::vec2& pos, const glm::vec2& size, Icon icon) {
+        const auto m_atlas = &m_assets.getTextureAtlas(AtlasID::GUI);
+        setTexture(m_atlas->getTextureID());
+        if (const auto icon_reg = m_atlas->at(static_cast<int>(icon))) {
+            drawSprite(pos,size,*icon_reg);
+        }
+    }
+
+    void Renderer::draw(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite) {
+        const auto m_atlas = &m_assets.getTextureAtlas(AtlasID::GUI);
+        setTexture(m_atlas->getTextureID());
+        if (const auto sprite_reg = m_atlas->at(static_cast<int>(sprite))) {
+            drawSprite(pos,size,*sprite_reg);
+        }
+    }
+
+    void Renderer::drawPatch(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite, const float margin) {
+        const auto m_atlas = &m_assets.getTextureAtlas(AtlasID::GUI);
+        const auto sprite_reg = m_atlas->at(static_cast<int>(sprite));
+        if (!sprite_reg) return;
+
+        setTexture(m_atlas->getTextureID());
+
+        float x_sizes[3] = { margin, size.x - 2.0f * margin, margin };
+        float y_sizes[3] = { margin, size.y - 2.0f * margin, margin };
+
+        const glm::vec2 uv_total = sprite_reg->b - sprite_reg->a;
+        const glm::vec2 uv_margin = uv_total / glm::vec2(sprite_reg->size) * margin;
+
+        float x_uvs[4] = {
+            sprite_reg->a.x,
+            sprite_reg->a.x + uv_margin.x,
+            sprite_reg->b.x - uv_margin.x,
+            sprite_reg->b.x
+        };
+
+        float y_uvs[4] = {
+            sprite_reg->a.y,
+            sprite_reg->a.y + uv_margin.y,
+            sprite_reg->b.y - uv_margin.y,
+            sprite_reg->b.y
+        };
+
+        for (int i = 0; i < 3; ++i) {
+            for (int j = 0; j < 3; ++j) {
+                if (x_sizes[i] <= 0.0f || y_sizes[j] <= 0.0f) continue;
+
+                Region slice{};
+                slice.a = { x_uvs[i],     y_uvs[j] };
+                slice.b = { x_uvs[i + 1], y_uvs[j + 1] };
+                slice.size = { static_cast<unsigned int>(margin), static_cast<unsigned int>(margin) };
+
+                glm::vec2 segmentPos = {
+                    pos.x + (i > 0 ? x_sizes[0] : 0) + (i > 1 ? x_sizes[1] : 0),
+                    pos.y + (j > 0 ? y_sizes[0] : 0) + (j > 1 ? y_sizes[1] : 0)
+                };
+
+                drawSprite(segmentPos, { x_sizes[i], y_sizes[j] }, slice);
+            }
+        }
+    }
+
+    glm::vec2 Renderer::measureText(const std::string& text) const {
+        const auto m_font = &m_assets.getFont(FontID::Regular);
+        return m_font->measureText(text);
     }
 
 }

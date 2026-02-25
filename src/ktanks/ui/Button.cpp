@@ -14,7 +14,7 @@ namespace ktanks {
         IWidget::onUpdate(dt);
     }
 
-    void Button::onRender(UIRenderer& renderer) {
+    void Button::onRender(Renderer& renderer) {
         GuiSprites sprite;
         if (m_isPressed) {
             sprite = GuiSprites::button_rectangle_gradient;

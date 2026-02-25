@@ -9,7 +9,7 @@ namespace ktanks {
 
     }
 
-    void EditorScreen::onDraw() {
+    void EditorScreen::onDraw(Renderer&) {
 
     }
 

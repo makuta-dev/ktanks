@@ -9,7 +9,7 @@ namespace ktanks {
     public:
         explicit Label(std::string text);
 
-        void onRender(UIRenderer &renderer) override;
+        void onRender(Renderer &renderer) override;
 
     private:
         std::string m_text;
