@@ -4,7 +4,6 @@
 #include <cstdint>
 
 #include "ktanks/graphics/Vertex.h"
-
 #include "ktanks/utils/AssetManager.h"
 
 namespace ktanks {

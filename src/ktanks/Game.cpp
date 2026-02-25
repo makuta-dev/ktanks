@@ -7,6 +7,7 @@ namespace ktanks {
         m_font = &m_assets.getFont(FontID::Bold);
         m_font2 = &m_assets.getFont(FontID::Regular);
     }
+
     Game::~Game() = default;
 
     void Game::onUpdate(const float dt) {

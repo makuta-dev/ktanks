@@ -3,6 +3,8 @@
 
 namespace ktanks {
 
+    constexpr auto BLOCK_TYPES = 27;
+
     enum class BlockColor : int {
         Marble,
         Rock,
