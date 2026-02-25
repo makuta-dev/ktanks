@@ -101,6 +101,39 @@ namespace ktanks {
                 }
             }
         }
+        if (id == AtlasID::GUI) {
+            data.push_back(root + "/textures/ui/input_outline_square.png");
+            data.push_back(root + "/textures/ui/input_square.png");
+            data.push_back(root + "/textures/ui/blue/arrow_basic_e.png");
+            data.push_back(root + "/textures/ui/blue/arrow_basic_w.png");
+            data.push_back(root + "/textures/ui/blue/button_rectangle_border.png");
+            data.push_back(root + "/textures/ui/blue/button_rectangle_depth_border.png");
+            data.push_back(root + "/textures/ui/blue/button_rectangle_depth_flat.png");
+            data.push_back(root + "/textures/ui/blue/button_rectangle_depth_gloss.png");
+            data.push_back(root + "/textures/ui/blue/button_rectangle_depth_gradient.png");
+            data.push_back(root + "/textures/ui/blue/button_rectangle_depth_line.png");
+            data.push_back(root + "/textures/ui/blue/button_rectangle_flat.png");
+            data.push_back(root + "/textures/ui/blue/button_rectangle_gloss.png");
+            data.push_back(root + "/textures/ui/blue/button_rectangle_gradient.png");
+            data.push_back(root + "/textures/ui/blue/button_rectangle_line.png");
+            data.push_back(root + "/textures/ui/blue/check_square_color_checkmark.png");
+            data.push_back(root + "/textures/ui/blue/check_square_color.png");
+            data.push_back(root + "/textures/ui/blue/check_square_grey_checkmark.png");
+            data.push_back(root + "/textures/ui/blue/check_square_grey.png");
+            data.push_back(root + "/textures/ui/blue/slide_hangle.png");
+            data.push_back(root + "/textures/ui/blue/slide_horizontal_color.png");
+            data.push_back(root + "/textures/ui/blue/slide_horizontal_grey.png");
+            data.push_back(root + "/textures/ui/icons/audioOff.png");
+            data.push_back(root + "/textures/ui/icons/audioOn.png");
+            data.push_back(root + "/textures/ui/icons/exit.png");
+            data.push_back(root + "/textures/ui/icons/export.png");
+            data.push_back(root + "/textures/ui/icons/gear.png");
+            data.push_back(root + "/textures/ui/icons/home.png");
+            data.push_back(root + "/textures/ui/icons/save.png");
+            data.push_back(root + "/textures/ui/icons/zoomDefault.png");
+            data.push_back(root + "/textures/ui/icons/zoomIn.png");
+            data.push_back(root + "/textures/ui/icons/zoomOut.png");
+        }
         return data;
     }
 
@@ -119,6 +152,7 @@ namespace ktanks {
     glm::uvec2 getAtlasSize(const AtlasID id) {
         switch (id) {
             case AtlasID::Terrain:
+            case AtlasID::GUI:
                 return glm::uvec2(1024);
             case AtlasID::Tanks:
                 return glm::uvec2(256);
@@ -296,10 +330,26 @@ namespace ktanks {
         return *m_atlases[index];
     }
 
-    Font& AssetManager::getFont() {
-        if (!m_font) {
-            m_font = std::make_unique<Font>(m_root + "fonts/Kenney_Future.ttf", 32);
+    std::string getFontPath(const FontID id) {
+        if (id == FontID::Regular) {
+            return "fonts/Kenney_Future.ttf";
         }
-        return *m_font;
+        if (id == FontID::Narrow) {
+            return "fonts/Kenney_Future_Narrow.ttf";
+        }
+        return "";
     }
+
+    Font& AssetManager::getFont(FontID id) {
+        const auto index = static_cast<size_t>(id);
+
+        if (!m_fonts[index]) {
+            m_fonts[index] = std::make_unique<Font>(
+                m_root + getFontPath(id)
+            );
+        }
+
+        return *m_fonts[index];
+    }
+
 }

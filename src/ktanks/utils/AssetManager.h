@@ -19,6 +19,13 @@ namespace ktanks {
         Terrain,
         Tanks,
         Blocks,
+        GUI,
+        Count
+    };
+
+    enum class FontID : uint16_t {
+        Regular,
+        Narrow,
         Count
     };
 
@@ -28,7 +35,7 @@ namespace ktanks {
 
         Shader& getShader(ShaderID);
         TextureAtlas& getTextureAtlas(AtlasID);
-        Font& getFont();
+        Font& getFont(FontID);
 
     private:
         std::string m_root;
@@ -39,7 +46,8 @@ namespace ktanks {
         std::array<std::unique_ptr<TextureAtlas>,
             static_cast<size_t>(AtlasID::Count)> m_atlases{};
 
-        std::unique_ptr<Font> m_font{nullptr};
+        std::array<std::unique_ptr<Font>,
+            static_cast<size_t>(FontID::Count)> m_fonts{};
     };
 
 }

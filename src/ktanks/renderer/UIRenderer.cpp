@@ -3,7 +3,7 @@
 namespace ktanks {
 
     UIRenderer::UIRenderer(AssetManager& a) : Renderer(a) {
-        m_font = &a.getFont();
+        m_font = &a.getFont(FontID::Regular);
     }
 
     UIRenderer::~UIRenderer() = default;

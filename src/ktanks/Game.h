@@ -3,17 +3,25 @@
 
 #include "ktanks/utils/AssetManager.h"
 #include "ktanks/window/Event.h"
+#include "ktanks/renderer/Renderer.h"
 
 namespace ktanks {
 
     class Game final {
     public:
-        explicit Game(AssetManager&);
+        Game();
         ~Game();
 
         void onUpdate(float dt);
         void onDraw();
         void onEvent(const Event &);
+
+    private:
+        AssetManager m_assets;
+        Renderer m_renderer;
+        TextureAtlas* m_gui;
+        Font* m_font;
+        Font* m_font2;
     };
 
 }

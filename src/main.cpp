@@ -1,6 +1,5 @@
 #include <chrono>
 
-#include "ktanks/renderer/Renderer.h"
 #include "ktanks/window/Window.h"
 #include "ktanks/Game.h"
 
@@ -11,8 +10,7 @@ using hclock = std::chrono::steady_clock;
 int main() {
     auto window = ktanks::Window("kTanks");
     const auto size = window.getSize();
-    auto asset_manager = ktanks::AssetManager();
-    auto tanks = ktanks::Game(asset_manager);
+    auto tanks = ktanks::Game();
     {
         tanks.onEvent({
             .type = ktanks::EventType::WindowResize,
