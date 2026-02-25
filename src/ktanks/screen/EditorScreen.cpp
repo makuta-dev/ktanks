@@ -1,5 +1,7 @@
 #include "EditorScreen.h"
 
+#include <SDL3/SDL_scancode.h>
+
 namespace ktanks {
 
     EditorScreen::EditorScreen(ScreenManager* m) : IScreen(m) {}
@@ -13,8 +15,12 @@ namespace ktanks {
 
     }
 
-    void EditorScreen::onEvent(const Event &) {
-
+    void EditorScreen::onEvent(const Event& e) {
+        if (e.type == EventType::Key) {
+            if (e.onKey.pressed && e.onKey.key == SDL_SCANCODE_ESCAPE) {
+                getManager().navigate(ScreenID::Main);
+            }
+        }
     }
 
 }

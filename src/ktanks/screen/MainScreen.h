@@ -19,6 +19,7 @@ namespace ktanks {
 
     private:
         std::unique_ptr<IWidget> m_center_widget;
+        LevelMap<TerrainSprite> m_background;
     };
 
 }

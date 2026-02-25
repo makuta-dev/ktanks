@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include "screen/EditorScreen.h"
 #include "screen/MainScreen.h"
 #include "screen/PlayScreen.h"
 
@@ -40,7 +41,11 @@ namespace ktanks {
         if (id == ScreenID::Play){
             m_screen = std::make_unique<PlayScreen>(this);
         }
+        if (id == ScreenID::Editor){
+            m_screen = std::make_unique<EditorScreen>(this);
+        }
 
+        m_screen->onInit();
         m_screen->onEvent(
             Event{
                 .type = EventType::WindowResize,
@@ -48,7 +53,8 @@ namespace ktanks {
                     static_cast<int>(m_view.x),
                     static_cast<int>(m_view.y)
                 }
-            });
+            }
+        );
     }
 
     glm::uvec2 Game::getViewport() {

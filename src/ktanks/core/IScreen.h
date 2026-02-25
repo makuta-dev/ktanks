@@ -16,6 +16,7 @@ namespace ktanks {
     enum class ScreenID {
         Main,
         Play,
+        Editor
     };
 
     class ScreenManager {
