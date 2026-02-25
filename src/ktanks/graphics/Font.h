@@ -25,10 +25,17 @@ namespace ktanks {
 
         [[nodiscard]] std::optional<Glyph> get(int code) const;
         [[nodiscard]] uint32_t getTextureID() const;
-        [[nodiscard]] int getSize() const;
+
+        [[nodiscard]] int getHeight() const;
+        [[nodiscard]] int getAscender() const;
+        [[nodiscard]] int getDescender() const;
+
+        [[nodiscard]] glm::vec2 measureText(const std::string& text) const;
 
     private:
         int m_height{-1};
+        int m_ascender{-1};
+        int m_descender{-1};
         Texture m_texture;
         std::unordered_map<int, Glyph> m_glyphs;
     };

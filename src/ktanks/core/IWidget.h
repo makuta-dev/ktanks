@@ -33,11 +33,7 @@ namespace ktanks {
                 }
             }
 
-            if (event.type == EventType::MouseMove && isPointInside({event.onMMove.x, event.onMMove.y})) {
-                return onEvent(event);
-            }
-
-            return false;
+            return onEvent(event);
         }
 
         virtual bool onEvent(const Event& event) { return false; }
@@ -55,8 +51,15 @@ namespace ktanks {
         [[nodiscard]] const glm::vec2& getSize()     const { return m_size; }
 
         [[nodiscard]] bool isPointInside(const glm::vec2& point) const {
-            return point.x >= m_position.x && point.x <= m_position.x + m_size.x &&
-                   point.y >= m_position.y && point.y <= m_position.y + m_size.y;
+            return point.x >= getAbsolutePosition().x && point.x <= getAbsolutePosition().x + m_size.x &&
+                   point.y >= getAbsolutePosition().y && point.y <= getAbsolutePosition().y + m_size.y;
+        }
+
+        [[nodiscard]] glm::vec2 getAbsolutePosition() const {
+            if (m_parent) {
+                return m_parent->getAbsolutePosition() + glm::vec2{m_position};
+            }
+            return m_position;
         }
 
         void addChild(std::unique_ptr<IWidget> child) {

@@ -13,6 +13,11 @@ namespace ktanks {
         drawText(text, pos, col, *m_font);
     }
 
+    void UIRenderer::textCentered(const std::string& text, const glm::vec2& pos, const glm::vec3& col) {
+        const auto size = m_font->measureText(text);
+        drawText(text, pos - size / 2.f, col, *m_font);
+    }
+
     void UIRenderer::icon(const glm::vec2& pos, const glm::vec2& size, Icon icon) {
         setTexture(m_atlas->getTextureID());
         if (const auto icon_reg = m_atlas->at(static_cast<int>(icon))) {

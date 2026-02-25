@@ -27,6 +27,10 @@ namespace ktanks {
             return;
         }
 
+        m_height = static_cast<int>(face->size->metrics.height >> 6);
+        m_ascender = static_cast<int>(face->size->metrics.ascender >> 6);
+        m_descender = static_cast<int>(face->size->metrics.descender >> 6);
+
         constexpr auto atlas_size = glm::uvec2(1024);
         auto tex = 0u;
         glGenTextures(1, &tex);
@@ -134,7 +138,36 @@ namespace ktanks {
         return m_texture.getID();
     }
 
-    int Font::getSize() const {
+    int Font::getHeight() const {
         return m_height;
+    }
+
+    int Font::getAscender() const {
+        return m_ascender;
+    }
+
+    int Font::getDescender() const {
+        return m_descender;
+    }
+
+    glm::vec2 Font::measureText(const std::string &text) const {
+        glm::vec2 totalSize{0.0f, static_cast<float>(m_height)};
+        float currentLineWidth = 0.0f;
+
+        for (const auto& c : text) {
+            if (c == '\n') {
+                totalSize.x = std::max(totalSize.x, currentLineWidth);
+                totalSize.y += static_cast<float>(m_height);
+                currentLineWidth = 0.0f;
+                continue;
+            }
+
+            if (const auto glyphOpt = get(c)) {
+                currentLineWidth += static_cast<float>(glyphOpt->advance);
+            }
+        }
+
+        totalSize.x = std::max(totalSize.x, currentLineWidth);
+        return totalSize;
     }
 }
