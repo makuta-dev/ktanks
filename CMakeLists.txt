@@ -19,8 +19,10 @@ add_executable(kTanks
         src/ktanks/core/data/BlockData.h
         src/ktanks/core/data/TankData.h
         src/ktanks/core/data/TerrainData.h
+        src/ktanks/core/data/GuiData.h
 
         src/ktanks/core/IScreen.h
+        src/ktanks/core/IWidget.h
         src/ktanks/core/Constants.h
         src/ktanks/core/Object.cpp
         src/ktanks/core/Object.h
@@ -52,10 +54,21 @@ add_executable(kTanks
         src/ktanks/renderer/Renderer.cpp
         src/ktanks/renderer/Renderer.h
 
+        src/ktanks/screen/EditorScreen.cpp
+        src/ktanks/screen/EditorScreen.h
         src/ktanks/screen/MainScreen.cpp
         src/ktanks/screen/MainScreen.h
         src/ktanks/screen/PlayScreen.cpp
         src/ktanks/screen/PlayScreen.h
+
+        src/ktanks/ui/Button.cpp
+        src/ktanks/ui/Button.h
+        src/ktanks/ui/Label.cpp
+        src/ktanks/ui/Label.h
+        src/ktanks/ui/Image.cpp
+        src/ktanks/ui/Image.h
+        src/ktanks/ui/List.cpp
+        src/ktanks/ui/List.h
 
         src/ktanks/utils/AssetManager.cpp
         src/ktanks/utils/AssetManager.h
@@ -68,8 +81,6 @@ add_executable(kTanks
         src/ktanks/Game.h
 
         src/main.cpp
-        src/ktanks/screen/EditorScreen.cpp
-        src/ktanks/screen/EditorScreen.h
 )
 
 target_include_directories(kTanks PRIVATE src)

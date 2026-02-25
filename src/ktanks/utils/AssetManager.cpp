@@ -155,9 +155,8 @@ namespace ktanks {
             case AtlasID::GUI:
                 return glm::uvec2(1024);
             case AtlasID::Tanks:
-                return glm::uvec2(256);
             case AtlasID::Blocks:
-                return glm::uvec2(128);
+                return glm::uvec2(256);
             default:
                 return glm::uvec2(0);
         }

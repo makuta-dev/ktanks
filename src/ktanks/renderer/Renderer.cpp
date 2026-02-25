@@ -27,17 +27,12 @@ namespace ktanks {
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, 16384 * sizeof(uint32_t), nullptr, GL_DYNAMIC_DRAW);
 
         glBindVertexArray(0);
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     Renderer::~Renderer() {
         glDeleteVertexArrays(1, &m_vao);
         glDeleteBuffers(1, &m_vbo);
         glDeleteBuffers(1, &m_ebo);
-
-        glDisable(GL_BLEND);
     }
 
     void Renderer::resize(const int w, const int h) {
@@ -156,8 +151,12 @@ namespace ktanks {
     }
 
     void Renderer::drawText(const std::string& text, const glm::vec2& pos, const glm::vec3& color, const Font& font) {
+        if (m_color != color) {
+            flush();
+            m_color = color;
+        }
+
         setTexture(font.getTextureID(),true);
-        m_color = color;
         auto p = pos;
         for (const auto& c : text) {
             if (const auto glyph = font.get(c)) {

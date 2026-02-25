@@ -11,12 +11,17 @@ namespace ktanks {
 
     using ScreenPtr = std::unique_ptr<IScreen>;
 
+    enum class ScreenID {
+        Main,
+        Play,
+    };
+
     class ScreenManager {
     public:
         ScreenManager() = default;
         virtual ~ScreenManager() = default;
 
-        virtual void navigate(ScreenPtr&) = 0;
+        virtual void navigate(ScreenID) = 0;
         virtual glm::uvec2 getViewport() = 0;
     };
 

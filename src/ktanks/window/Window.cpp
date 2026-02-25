@@ -171,4 +171,10 @@ namespace ktanks {
         return true;
     }
 
+    void closeEvent() {
+        SDL_Event event{};
+        event.type = SDL_EVENT_WINDOW_CLOSE_REQUESTED;
+        SDL_PushEvent(&event);
+    }
+
 }

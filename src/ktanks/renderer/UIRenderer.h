@@ -18,6 +18,9 @@ namespace ktanks {
         void draw(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite);
         void drawPatch(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite, float margin = 16.0f);
 
+        //ugly shit
+        glm::vec2 measureText(const std::string& text) const;
+
     private:
         Font* m_font;
         TextureAtlas* m_atlas;

@@ -38,6 +38,7 @@ namespace ktanks {
     };
 
     bool popEvent(Event&);
+    void closeEvent();
 
 }
 

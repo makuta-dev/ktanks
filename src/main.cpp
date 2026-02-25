@@ -22,6 +22,9 @@ int main() {
     }
     auto last = hclock::now();
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glClearColor(0.f, 0.0f, 0.0f, 1.f);
     tanks.onInit();
     while (window.isRunning()) {

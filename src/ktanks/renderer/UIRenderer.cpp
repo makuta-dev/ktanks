@@ -42,7 +42,7 @@ namespace ktanks {
         float y_sizes[3] = { margin, size.y - 2.0f * margin, margin };
 
         glm::vec2 uv_total = sprite_reg->b - sprite_reg->a;
-        glm::vec2 uv_margin = (uv_total / glm::vec2(sprite_reg->size)) * margin;
+        glm::vec2 uv_margin = uv_total / glm::vec2(sprite_reg->size) * margin;
 
         float x_uvs[4] = {
             sprite_reg->a.x,
@@ -65,7 +65,7 @@ namespace ktanks {
                 Region slice{};
                 slice.a = { x_uvs[i],     y_uvs[j] };
                 slice.b = { x_uvs[i + 1], y_uvs[j + 1] };
-                slice.size = { (unsigned int)margin, (unsigned int)margin };
+                slice.size = { static_cast<unsigned int>(margin), static_cast<unsigned int>(margin) };
 
                 glm::vec2 segmentPos = {
                     pos.x + (i > 0 ? x_sizes[0] : 0) + (i > 1 ? x_sizes[1] : 0),
@@ -75,6 +75,10 @@ namespace ktanks {
                 drawSprite(segmentPos, { x_sizes[i], y_sizes[j] }, slice);
             }
         }
+    }
+
+    glm::vec2 UIRenderer::measureText(const std::string& text) const {
+        return m_font->measureText(text);
     }
 
 }

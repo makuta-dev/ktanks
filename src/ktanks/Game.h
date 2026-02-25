@@ -16,7 +16,7 @@ namespace ktanks {
         void onDraw();
         void onEvent(const Event &);
 
-        void navigate(ScreenPtr &) override;
+        void navigate(ScreenID) override;
         glm::uvec2 getViewport() override;
 
     private:
