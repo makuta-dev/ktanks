@@ -8,7 +8,7 @@ namespace ktanks {
 
     class EditorScreen final : public IScreen {
     public:
-        explicit EditorScreen(AssetManager&);
+        explicit EditorScreen(AssetManager&, ScreenManager*);
         ~EditorScreen() override;
 
         void onUpdate(float dt) override;

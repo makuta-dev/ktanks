@@ -2,7 +2,7 @@
 
 namespace ktanks {
 
-    EditorScreen::EditorScreen(AssetManager&){}
+    EditorScreen::EditorScreen(AssetManager&, ScreenManager* m) : IScreen(m) {}
     EditorScreen::~EditorScreen() = default;
 
     void EditorScreen::onUpdate(float dt) {

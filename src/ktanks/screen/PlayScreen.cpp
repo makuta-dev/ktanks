@@ -5,7 +5,7 @@
 
 namespace ktanks {
 
-    PlayScreen::PlayScreen(AssetManager& a) : m_player(TankColor::Green), m_level({16,16}), m_game_renderer(a) {
+    PlayScreen::PlayScreen(AssetManager& a, ScreenManager* m) : IScreen(m), m_player(TankColor::Green), m_level({16,16}), m_game_renderer(a) {
         m_player.setPos(TILE_SIZE);
     }
 

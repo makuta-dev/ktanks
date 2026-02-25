@@ -23,7 +23,7 @@ int main() {
     auto last = hclock::now();
 
     glClearColor(0.f, 0.0f, 0.0f, 1.f);
-
+    tanks.onInit();
     while (window.isRunning()) {
         const auto now = hclock::now();
         const auto dt = std::chrono::duration<float>(now - last).count();

@@ -14,6 +14,7 @@ namespace ktanks {
         void text(const std::string& text, const glm::vec2& pos, const glm::vec3& col);
         void icon(const glm::vec2& pos, const glm::vec2& size, Icon icon);
         void draw(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite);
+        void drawPatch(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite, float margin = 16.0f);
 
     private:
         Font* m_font;

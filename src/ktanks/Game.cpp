@@ -1,33 +1,39 @@
 #include "Game.h"
 
+#include "screen/MainScreen.h"
+
 namespace ktanks {
 
-    Game::Game() : m_renderer(m_assets) {
-        m_gui = &m_assets.getTextureAtlas(AtlasID::GUI);
-        m_font = &m_assets.getFont(FontID::Bold);
-        m_font2 = &m_assets.getFont(FontID::Regular);
+    Game::Game() {
+        m_screen = std::make_unique<MainScreen>(m_assets, this);
     }
-
     Game::~Game() = default;
 
-    void Game::onUpdate(const float dt) {
+    void Game::onInit() {
+        m_screen->onInit();
+    }
 
+    void Game::onUpdate(const float dt) {
+        m_screen->onUpdate(dt);
     }
 
     void Game::onDraw() {
-        m_renderer.beginFrame();
-        m_renderer.setTexture(m_gui->getTextureID());
-        m_renderer.drawSprite({0,0}, {512,512},{{0,0},{1,1}});
-
-        m_renderer.drawText("Hello, World",{600,100},{1,1,1},*m_font);
-        m_renderer.drawText("Hello, World",{600,116},{1,1,1},*m_font2);
-        m_renderer.endFrame();
+        m_screen->onDraw();
     }
 
     void Game::onEvent(const Event& e) {
         if (e.type == EventType::WindowResize) {
-            m_renderer.resize(e.onWResize.width, e.onWResize.height);
+            m_view = glm::uvec2(e.onWResize.width, e.onWResize.height);
         }
+        m_screen->onEvent(e);
+    }
+
+    void Game::navigate(ScreenPtr& s) {
+        m_screen = std::move(s);
+    }
+
+    glm::uvec2 Game::getViewport() {
+        return m_view;
     }
 
 }
