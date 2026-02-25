@@ -227,7 +227,11 @@ namespace ktanks {
     void Renderer::textCentered(const std::string& text, const glm::vec2& pos, const glm::vec3& col) {
         const auto m_font = &m_assets.getFont(FontID::Regular);
         const auto size = m_font->measureText(text);
-        drawText(text, pos - size / 2.f, col, *m_font);
+        const auto position = glm::vec2(
+            pos.x - size.x / 2.f,
+            pos.y + size.y / 2.f
+        );
+        drawText(text, position, col, *m_font);
     }
 
     void Renderer::icon(const glm::vec2& pos, const glm::vec2& size, Icon icon) {

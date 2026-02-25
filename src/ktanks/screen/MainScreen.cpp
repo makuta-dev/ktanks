@@ -8,7 +8,7 @@
 
 namespace ktanks {
 
-    MainScreen::MainScreen(AssetManager& a, ScreenManager* m) : IScreen(m) {
+    MainScreen::MainScreen(ScreenManager* m) : IScreen(m) {
         m_center_widget = std::make_unique<List>(Orientation::Vertical);
     }
 

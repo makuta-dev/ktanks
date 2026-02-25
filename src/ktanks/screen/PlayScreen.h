@@ -11,7 +11,7 @@ namespace ktanks {
 
     class PlayScreen final : public IScreen{
     public:
-        explicit PlayScreen(AssetManager&, ScreenManager*);
+        explicit PlayScreen(ScreenManager*);
         ~PlayScreen() override;
 
         void onUpdate(float dt) override;

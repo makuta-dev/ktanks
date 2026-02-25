@@ -1,11 +1,13 @@
 #include "PlayScreen.h"
 
+#include <SDL3/SDL_scancode.h>
+
 #include "ktanks/core/Constants.h"
 #include "ktanks/window/Event.h"
 
 namespace ktanks {
 
-    PlayScreen::PlayScreen(AssetManager& a, ScreenManager* m) : IScreen(m), m_player(TankColor::Green), m_level({16,16}) {
+    PlayScreen::PlayScreen(ScreenManager* m) : IScreen(m), m_player(TankColor::Green), m_level({16,16}) {
         m_player.setPos(TILE_SIZE);
     }
 
@@ -25,6 +27,11 @@ namespace ktanks {
     void PlayScreen::onEvent(const Event& e) {
         if (e.type == EventType::WindowResize) {
             view = glm::uvec2(e.onWResize.width, e.onWResize.height);
+        }
+        if (e.type == EventType::Key) {
+            if (e.onKey.pressed && e.onKey.key == SDL_SCANCODE_ESCAPE) {
+                getManager().navigate(ScreenID::Main);
+            }
         }
     }
 

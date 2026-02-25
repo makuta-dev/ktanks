@@ -11,6 +11,8 @@
 namespace ktanks {
 
     Font::Font(const std::string& path, const int size) : m_height(size) {
+        m_height = size;
+
         FT_Library ft;
         if (const auto code = FT_Init_FreeType(&ft); code) {
             spdlog::error("Cannot init Freetype Library: {}", FT_Error_String(code));
@@ -27,7 +29,6 @@ namespace ktanks {
             return;
         }
 
-        m_height = static_cast<int>(face->size->metrics.height >> 6);
         m_ascender = static_cast<int>(face->size->metrics.ascender >> 6);
         m_descender = static_cast<int>(face->size->metrics.descender >> 6);
 

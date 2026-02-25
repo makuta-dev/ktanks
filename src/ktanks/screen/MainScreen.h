@@ -9,7 +9,7 @@ namespace ktanks {
 
     class MainScreen final : public IScreen {
     public:
-        explicit MainScreen(AssetManager&, ScreenManager*);
+        explicit MainScreen(ScreenManager*);
         ~MainScreen() override;
 
         void onInit() override;

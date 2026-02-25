@@ -5,8 +5,8 @@
 
 namespace ktanks {
 
-    Game::Game() : m_assets(), m_renderer(m_assets){
-        m_screen = std::make_unique<MainScreen>(m_assets, this);
+    Game::Game() : m_renderer(m_assets){
+        m_screen = std::make_unique<MainScreen>(this);
     }
 
     Game::~Game() = default;
@@ -35,10 +35,10 @@ namespace ktanks {
 
     void Game::navigate(const ScreenID id) {
         if (id == ScreenID::Main){
-            m_screen = std::make_unique<MainScreen>(m_assets,this);
+            m_screen = std::make_unique<MainScreen>(this);
         }
         if (id == ScreenID::Play){
-            m_screen = std::make_unique<PlayScreen>(m_assets,this);
+            m_screen = std::make_unique<PlayScreen>(this);
         }
 
         m_screen->onEvent(
