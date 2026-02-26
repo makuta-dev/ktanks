@@ -15,8 +15,13 @@ namespace ktanks {
         void onEvent(const Event &) override;
 
     private:
+        void updateMatrix();
+
+        bool m_is_move{false};
         float m_zoom{1.f};
         glm::vec2 m_offset{0.f};
+        glm::vec2 m_mouse{0.f};
+        glm::vec2 m_last_mouse{0.f};
         glm::uvec2 m_view{0u};
         LevelMap<TerrainSprite> m_terrain_layer;
         LevelMap<BlockID> m_blocks_layer;

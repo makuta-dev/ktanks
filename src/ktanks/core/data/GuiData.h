@@ -30,6 +30,7 @@ namespace ktanks {
     enum class Icon : int {
         AudioOff = 21,
         AudioOn,
+        Crosshair,
         Exit,
         Export,
         Gear,

@@ -55,11 +55,17 @@ add_executable(kTanks
         src/ktanks/screen/MainScreen.h
         src/ktanks/screen/PlayScreen.cpp
         src/ktanks/screen/PlayScreen.h
+        src/ktanks/screen/SetupScreen.cpp
+        src/ktanks/screen/SetupScreen.h
 
         src/ktanks/ui/Button.cpp
         src/ktanks/ui/Button.h
+        src/ktanks/ui/Container.cpp
+        src/ktanks/ui/Container.h
         src/ktanks/ui/Label.cpp
         src/ktanks/ui/Label.h
+        src/ktanks/ui/Input.cpp
+        src/ktanks/ui/Input.h
         src/ktanks/ui/Image.cpp
         src/ktanks/ui/Image.h
         src/ktanks/ui/List.cpp
@@ -67,6 +73,8 @@ add_executable(kTanks
 
         src/ktanks/utils/AssetManager.cpp
         src/ktanks/utils/AssetManager.h
+        src/ktanks/utils/InputManager.cpp
+        src/ktanks/utils/InputManager.h
 
         src/ktanks/window/Event.h
         src/ktanks/window/Window.cpp
@@ -76,14 +84,7 @@ add_executable(kTanks
         src/ktanks/Game.h
 
         src/main.cpp
-        src/ktanks/screen/SetupScreen.cpp
-        src/ktanks/screen/SetupScreen.h
-        src/ktanks/ui/Input.cpp
-        src/ktanks/ui/Input.h
-        src/ktanks/utils/InputManager.cpp
-        src/ktanks/utils/InputManager.h
-        src/ktanks/ui/Container.cpp
-        src/ktanks/ui/Container.h
+
 )
 
 target_include_directories(kTanks PRIVATE src)

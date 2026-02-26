@@ -113,7 +113,8 @@ This project utilizes high-quality open-source assets by **Kenney** and **Steve 
 
 * [ ] **Projectile Manager:** Create a system to handle bullet spawning and life-cycles.
 * [ ] **Collision Engine:** Implement AABB (Axis-Aligned Bounding Box) for walls and tanks.
-* [ ] **Level Loading:** Create a simple parser to load level layouts from a file.
+* [ ] **Level IO:** Create a simple parser to load and save level data from/to files.
+* [ ] **Level Editor:** Simplify creating levels for game, and give ability to players for extending game by themselves
 * [ ] **Basic AI:** Implement stationary enemy turrets that fire at the player.
 
 ### 💎 Phase 4: UI & Polishing
@@ -128,7 +129,7 @@ This project utilizes high-quality open-source assets by **Kenney** and **Steve 
 ### 📈 Current Milestone
 
 **Status:** `Phase 3: Gameplay Systems`  
-**Progress:** `[░░░░░░░░░░] 0%`
+**Progress:** `[▓░░░░░░░░░] 10%`
 
 <!-- ▓░ -->
 

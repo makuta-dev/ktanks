@@ -22,6 +22,7 @@ namespace ktanks {
 
     void Game::onDraw() {
         m_renderer.beginFrame();
+        m_renderer.setViewMatrix(glm::mat4{1.f});
         m_screen->onDraw(m_renderer);
         m_renderer.endFrame();
     }

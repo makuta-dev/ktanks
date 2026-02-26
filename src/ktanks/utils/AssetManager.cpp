@@ -125,6 +125,7 @@ namespace ktanks {
             data.push_back(root + "/textures/ui/blue/slide_horizontal_grey.png");
             data.push_back(root + "/textures/ui/icons/audioOff.png");
             data.push_back(root + "/textures/ui/icons/audioOn.png");
+            data.push_back(root + "/textures/ui/icons/crosshair.png");
             data.push_back(root + "/textures/ui/icons/exit.png");
             data.push_back(root + "/textures/ui/icons/export.png");
             data.push_back(root + "/textures/ui/icons/gear.png");
