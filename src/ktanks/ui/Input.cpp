@@ -15,6 +15,9 @@ namespace ktanks {
             if (!m_isHovered && m_isFocused) {
                 m_isFocused = false;
             }
+            if (!m_isHovered) {
+                if (m_onSubmit && !m_text.empty()) m_onSubmit(m_text);
+            }
             return m_isHovered;
         }
 

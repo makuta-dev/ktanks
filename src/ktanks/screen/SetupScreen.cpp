@@ -6,6 +6,7 @@
 #include "EditorScreen.h"
 #include "MainScreen.h"
 #include "ktanks/ui/Button.h"
+#include "ktanks/ui/Container.h"
 #include "ktanks/ui/Input.h"
 #include "ktanks/ui/Label.h"
 #include "ktanks/ui/List.h"
@@ -20,22 +21,26 @@ namespace ktanks {
         m_background({32,32}, TerrainSprite::Grass2) {}
 
     void SetupScreen::onInit() {
-        m_widget = std::make_unique<List>(Orientation::Vertical);
+        m_widget = std::make_unique<Container>();
 
-        m_widget->addChild(std::make_unique<Label>("Set level size"));
-        m_widget->addChild(std::make_unique<Input>("Width:", [this](const auto& text) {
+        auto m_root = std::make_unique<List>(Orientation::Vertical);
+
+        m_root->addChild(std::make_unique<Label>("Set level size",true));
+        m_root->addChild(std::make_unique<Input>("Width:", [this](const auto& text) {
             if (isNumbers(text)) {
                 m_world_size.x = std::stoi(text);
             }
         }));
-        m_widget->addChild(std::make_unique<Input>("Height:",[this](const auto& text) {
+        m_root->addChild(std::make_unique<Input>("Height:",[this](const auto& text) {
             if (isNumbers(text)) {
                 m_world_size.y = std::stoi(text);
             }
         }));
-        m_widget->addChild(std::make_unique<Button>("Next",[this] {
+        m_root->addChild(std::make_unique<Button>("Next",[this] {
             getManager().navigate(std::make_unique<EditorScreen>(m_world_size, &getManager()));
         }));
+
+        m_widget->addChild(std::move(m_root));
 
         m_widget->invalidateLayout();
         m_widget->setPosition(getManager().getViewport() / 2u - glm::uvec2(m_widget->getSize()) / 2u);

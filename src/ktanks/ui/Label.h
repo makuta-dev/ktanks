@@ -7,11 +7,13 @@ namespace ktanks {
 
     class Label final : public IWidget{
     public:
-        explicit Label(std::string text);
+        explicit Label(std::string text, bool centered = false);
 
+        void performLayout() override;
         void onRender(Renderer &renderer) override;
 
     private:
+        bool is_centered;
         std::string m_text;
     };
 

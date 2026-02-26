@@ -82,6 +82,8 @@ add_executable(kTanks
         src/ktanks/ui/Input.h
         src/ktanks/utils/InputManager.cpp
         src/ktanks/utils/InputManager.h
+        src/ktanks/ui/Container.cpp
+        src/ktanks/ui/Container.h
 )
 
 target_include_directories(kTanks PRIVATE src)

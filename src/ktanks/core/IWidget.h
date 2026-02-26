@@ -69,8 +69,8 @@ namespace ktanks {
         }
 
         void invalidateLayout() {
-            performLayout();
             if (m_parent) m_parent->invalidateLayout();
+            performLayout();
         }
 
     protected:
