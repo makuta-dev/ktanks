@@ -250,31 +250,25 @@ namespace ktanks {
         }
     }
 
-    void Renderer::drawPatch(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite, const float margin) {
-        const auto m_atlas = &m_assets.getTextureAtlas(AtlasID::GUI);
-        const auto sprite_reg = m_atlas->at(static_cast<int>(sprite));
-        if (!sprite_reg) return;
-
-        setTexture(m_atlas->getTextureID());
-
+    void Renderer::drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region& region, const float margin) {
         float x_sizes[3] = { margin, size.x - 2.0f * margin, margin };
         float y_sizes[3] = { margin, size.y - 2.0f * margin, margin };
 
-        const glm::vec2 uv_total = sprite_reg->b - sprite_reg->a;
-        const glm::vec2 uv_margin = uv_total / glm::vec2(sprite_reg->size) * margin;
+        const glm::vec2 uv_total = region.b - region.a;
+        const glm::vec2 uv_margin = uv_total / glm::vec2(region.size) * margin;
 
         float x_uvs[4] = {
-            sprite_reg->a.x,
-            sprite_reg->a.x + uv_margin.x,
-            sprite_reg->b.x - uv_margin.x,
-            sprite_reg->b.x
+            region.a.x,
+            region.a.x + uv_margin.x,
+            region.b.x - uv_margin.x,
+            region.b.x
         };
 
         float y_uvs[4] = {
-            sprite_reg->a.y,
-            sprite_reg->a.y + uv_margin.y,
-            sprite_reg->b.y - uv_margin.y,
-            sprite_reg->b.y
+            region.a.y,
+            region.a.y + uv_margin.y,
+            region.b.y - uv_margin.y,
+            region.b.y
         };
 
         for (int i = 0; i < 3; ++i) {
@@ -294,6 +288,22 @@ namespace ktanks {
                 drawSprite(segmentPos, { x_sizes[i], y_sizes[j] }, slice);
             }
         }
+    }
+
+    void Renderer::drawPatch(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite, const float margin) {
+        const auto m_atlas = &m_assets.getTextureAtlas(AtlasID::GUI);
+        const auto sprite_reg = m_atlas->at(static_cast<int>(sprite));
+        if (!sprite_reg) return;
+        setTexture(m_atlas->getTextureID());
+        drawSprite(pos,size,*sprite_reg,margin);
+    }
+
+    void Renderer::drawPatchI(const glm::vec2& pos, const glm::vec2& size, Icon icon, const float margin) {
+        const auto m_atlas = &m_assets.getTextureAtlas(AtlasID::GUI);
+        const auto sprite_reg = m_atlas->at(static_cast<int>(icon));
+        if (!sprite_reg) return;
+        setTexture(m_atlas->getTextureID());
+        drawSprite(pos,size,*sprite_reg,margin);
     }
 
     glm::vec2 Renderer::measureText(const std::string& text) const {

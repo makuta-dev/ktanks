@@ -14,9 +14,9 @@ namespace ktanks {
 
     constexpr float CAMERA_SPEED = 3.75f;
 
-    constexpr float ZOOM_STEP = 0.25f;
-    constexpr float ZOOM_MIN = 0.25f;
-    constexpr float ZOOM_MAX = 3.00f;
+    constexpr float ZOOM_STEP = 0.05f;
+    constexpr float ZOOM_MIN = 0.1f;
+    constexpr float ZOOM_MAX = 3.0f;
     constexpr float ZOOM_STEPS = (ZOOM_MAX - ZOOM_MIN) / ZOOM_STEP;
 
 }

@@ -24,6 +24,10 @@ namespace ktanks {
         r.setViewMatrix(m_view_mat);
         r.drawTerrain(m_terrain_layer);
         //r.drawBlocks(m_blocks_layer);
+
+        const auto w = screenToWorld();
+        const auto i = glm::floor(w / TILE_SIZE);
+        r.icon(i * TILE_SIZE,TILE_SIZE,Icon::Crosshair);
     }
 
     void EditorScreen::onEvent(const Event& e) {
@@ -49,8 +53,13 @@ namespace ktanks {
             m_is_move = e.onMButton.pressed && e.onMButton.button == SDL_BUTTON_RIGHT;
         }
         if (e.type == EventType::MouseWheel) {
+            const auto old_zoom = m_zoom;
             m_zoom += e.onMWheel.dy * ZOOM_STEP;
             m_zoom = glm::clamp(m_zoom, ZOOM_MIN, ZOOM_MAX);
+
+            const glm::vec2 mouseWorldBeforeZoom = (m_mouse - m_offset) / old_zoom;
+            m_offset = m_mouse - (mouseWorldBeforeZoom * m_zoom);
+
             updateMatrix();
         }
     }
@@ -61,4 +70,7 @@ namespace ktanks {
         m_view_mat = glm::scale(m_view_mat, glm::vec3(m_zoom, m_zoom, 1.0f));
     }
 
+    glm::vec2 EditorScreen::screenToWorld() const {
+        return (m_mouse - m_offset) / m_zoom;
+    }
 }

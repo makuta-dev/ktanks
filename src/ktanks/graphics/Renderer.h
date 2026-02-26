@@ -26,6 +26,7 @@ namespace ktanks {
 
         void drawSprite(const glm::vec2& pos, const glm::vec2& size, float angle, const glm::vec2& center,const Region&);
         void drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region&);
+        void drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region&, float margin);
         void drawText(const std::string& text, const glm::vec2& pos, const glm::vec3& color, const Font& font);
 
         void drawTank(const Tank&);
@@ -39,6 +40,7 @@ namespace ktanks {
         void icon(const glm::vec2& pos, const glm::vec2& size, Icon icon);
         void draw(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite);
         void drawPatch(const glm::vec2& pos, const glm::vec2& size, GuiSprites sprite, float margin = 16.0f);
+        void drawPatchI(const glm::vec2& pos, const glm::vec2& size, Icon icon, float margin = 8.0f);
 
         [[nodiscard]] glm::vec2 measureText(const std::string& text) const;
 

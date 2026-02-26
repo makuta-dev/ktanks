@@ -16,6 +16,7 @@ namespace ktanks {
 
     private:
         void updateMatrix();
+        glm::vec2 screenToWorld() const;
 
         bool m_is_move{false};
         float m_zoom{1.f};
