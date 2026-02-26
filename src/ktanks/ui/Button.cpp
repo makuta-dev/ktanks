@@ -21,7 +21,7 @@ namespace ktanks {
         } else if (m_isHovered) {
             sprite = GuiSprites::button_rectangle_flat;
         } else {
-            sprite = GuiSprites::input_square;
+            sprite = GuiSprites::check_square_grey;
         }
 
         const glm::vec2 absPos = getAbsolutePosition();

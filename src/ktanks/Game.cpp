@@ -1,8 +1,8 @@
 #include "Game.h"
 
-#include "screen/EditorScreen.h"
 #include "screen/MainScreen.h"
 #include "screen/PlayScreen.h"
+#include "screen/SetupScreen.h"
 
 namespace ktanks {
 
@@ -34,27 +34,20 @@ namespace ktanks {
         m_screen->onEvent(e);
     }
 
-    void Game::navigate(const ScreenID id) {
-        if (id == ScreenID::Main){
-            m_screen = std::make_unique<MainScreen>(this);
-        }
-        if (id == ScreenID::Play){
-            m_screen = std::make_unique<PlayScreen>(this);
-        }
-        if (id == ScreenID::Editor){
-            m_screen = std::make_unique<EditorScreen>(this);
-        }
-
-        m_screen->onInit();
-        m_screen->onEvent(
-            Event{
-                .type = EventType::WindowResize,
-                .onWResize = WindowResizeEvent{
-                    static_cast<int>(m_view.x),
-                    static_cast<int>(m_view.y)
+    void Game::navigate(ScreenPtr id) {
+        if (m_screen != id){
+            m_screen = std::move(id);
+            m_screen->onInit();
+            m_screen->onEvent(
+                Event{
+                    .type = EventType::WindowResize,
+                    .onWResize = WindowResizeEvent{
+                        static_cast<int>(m_view.x),
+                        static_cast<int>(m_view.y)
+                    }
                 }
-            }
-        );
+            );
+        }
     }
 
     glm::uvec2 Game::getViewport() {

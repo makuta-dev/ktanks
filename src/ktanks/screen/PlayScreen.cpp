@@ -2,6 +2,7 @@
 
 #include <SDL3/SDL_scancode.h>
 
+#include "MainScreen.h"
 #include "ktanks/core/Constants.h"
 #include "ktanks/window/Event.h"
 
@@ -30,7 +31,7 @@ namespace ktanks {
         }
         if (e.type == EventType::Key) {
             if (e.onKey.pressed && e.onKey.key == SDL_SCANCODE_ESCAPE) {
-                getManager().navigate(ScreenID::Main);
+                getManager().navigate(std::make_unique<MainScreen>(&getManager()));
             }
         }
     }

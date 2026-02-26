@@ -1,5 +1,6 @@
 #include "MainScreen.h"
 
+#include "SetupScreen.h"
 #include "ktanks/screen/PlayScreen.h"
 #include "ktanks/ui/Button.h"
 #include "ktanks/ui/List.h"
@@ -14,8 +15,8 @@ namespace ktanks {
     MainScreen::~MainScreen() = default;
 
     void MainScreen::onInit() {
-        m_center_widget->addChild(std::make_unique<Button>("Play", [this]{ getManager().navigate(ScreenID::Play); }));
-        m_center_widget->addChild(std::make_unique<Button>("Level Editor", [this]{ getManager().navigate(ScreenID::Editor); }));
+        m_center_widget->addChild(std::make_unique<Button>("Play", [this]{ getManager().navigate(std::make_unique<PlayScreen>(&getManager())); }));
+        m_center_widget->addChild(std::make_unique<Button>("Level Editor", [this]{ getManager().navigate(std::make_unique<SetupScreen>(&getManager())); }));
         m_center_widget->addChild(std::make_unique<Button>("Exit", []{ closeEvent(); }));
 
         m_center_widget->invalidateLayout();

@@ -76,6 +76,12 @@ add_executable(kTanks
         src/ktanks/Game.h
 
         src/main.cpp
+        src/ktanks/screen/SetupScreen.cpp
+        src/ktanks/screen/SetupScreen.h
+        src/ktanks/ui/Input.cpp
+        src/ktanks/ui/Input.h
+        src/ktanks/utils/InputManager.cpp
+        src/ktanks/utils/InputManager.h
 )
 
 target_include_directories(kTanks PRIVATE src)

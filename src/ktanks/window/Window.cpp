@@ -164,6 +164,13 @@ namespace ktanks {
                 };
                 break;
 
+            case SDL_EVENT_TEXT_INPUT:
+                outEvent.type = EventType::Text;
+                outEvent.onText = {
+                    sdlEvent.text.text
+                };
+                break;
+
             default:
                 return popEvent(outEvent);
         }

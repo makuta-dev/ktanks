@@ -12,6 +12,7 @@ namespace ktanks {
         MouseMove,
         MouseWheel,
 
+        Text,
         Key,
     };
 
@@ -47,6 +48,10 @@ namespace ktanks {
         int mods;
     };
 
+    struct TextEvent {
+        const char* text;
+    };
+
     struct Event {
         EventType type;
         union {
@@ -55,6 +60,7 @@ namespace ktanks {
             MouseButtonEvent onMButton;
             MouseMoveEvent onMMove;
             MouseWheelEvent onMWheel;
+            TextEvent onText;
             KeyEvent onKey;
         };
     };
