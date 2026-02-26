@@ -84,6 +84,12 @@ add_executable(kTanks
         src/ktanks/Game.h
 
         src/main.cpp
+        src/ktanks/ui/editor/TileButton.cpp
+        src/ktanks/ui/editor/TileButton.h
+        src/ktanks/ui/editor/TilePalette.cpp
+        src/ktanks/ui/editor/TilePalette.h
+        src/ktanks/ui/ScrollContainer.cpp
+        src/ktanks/ui/ScrollContainer.h
 
 )
 

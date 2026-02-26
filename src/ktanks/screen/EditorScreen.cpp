@@ -5,8 +5,8 @@
 #include <SDL3/SDL_scancode.h>
 #include <spdlog/spdlog.h>
 
-#include "MainScreen.h"
 #include "ktanks/core/Constants.h"
+#include "ktanks/screen/MainScreen.h"
 
 namespace ktanks {
 
@@ -16,7 +16,11 @@ namespace ktanks {
 
     EditorScreen::~EditorScreen() = default;
 
-    void EditorScreen::onUpdate(float dt) {
+    void EditorScreen::onInit() {
+
+    }
+
+    void EditorScreen::onUpdate(const float dt) {
 
     }
 
@@ -26,41 +30,51 @@ namespace ktanks {
         //r.drawBlocks(m_blocks_layer);
 
         const auto w = screenToWorld();
-        const auto i = glm::floor(w / TILE_SIZE);
-        r.icon(i * TILE_SIZE,TILE_SIZE,Icon::Crosshair);
+        const auto i = glm::uvec2(glm::floor(w / TILE_SIZE));
+        if (i.x < m_terrain_layer.getSize().x && i.y < m_terrain_layer.getSize().y) {
+            r.icon(glm::vec2(i) * TILE_SIZE,TILE_SIZE,Icon::Crosshair);
+        }
     }
 
     void EditorScreen::onEvent(const Event& e) {
-        if (e.type == EventType::Key) {
-            if (e.onKey.pressed && e.onKey.key == SDL_SCANCODE_ESCAPE) {
-                m_view_mat = glm::mat4(1.0f);
-                getManager().navigate(std::make_unique<MainScreen>(&getManager()));
+        switch (e.type) {
+            case EventType::MouseButton: {
+                if (e.onMButton.button == SDL_BUTTON_LEFT) {
+                    if (e.onMButton.pressed) {
+                        paintTileAtMouse();
+                    }
+                }
+                break;
             }
-        }
-        if (e.type == EventType::WindowResize) {
-            m_view = glm::uvec2(e.onWResize.width, e.onWResize.height);
-        }
-        if (e.type == EventType::MouseMove) {
-            m_last_mouse = m_mouse;
-            m_mouse = glm::vec2{e.onMMove.x, e.onMMove.y};
-            if (m_is_move) {
-                const auto delta = m_mouse - m_last_mouse;
-                m_offset += delta;
-                updateMatrix();
+
+            case EventType::MouseMove: {
+                m_mouse = glm::vec2{e.onMMove.x, e.onMMove.y};
+                break;
             }
-        }
-        if (e.type == EventType::MouseButton) {
-            m_is_move = e.onMButton.pressed && e.onMButton.button == SDL_BUTTON_RIGHT;
-        }
-        if (e.type == EventType::MouseWheel) {
-            const auto old_zoom = m_zoom;
-            m_zoom += e.onMWheel.dy * ZOOM_STEP;
-            m_zoom = glm::clamp(m_zoom, ZOOM_MIN, ZOOM_MAX);
 
-            const glm::vec2 mouseWorldBeforeZoom = (m_mouse - m_offset) / old_zoom;
-            m_offset = m_mouse - (mouseWorldBeforeZoom * m_zoom);
+            case EventType::MouseWheel: {
+                const float old_zoom = m_zoom;
+                m_zoom = glm::clamp(m_zoom + (e.onMWheel.dy * ZOOM_STEP), ZOOM_MIN, ZOOM_MAX);
 
-            updateMatrix();
+                if (m_zoom != old_zoom) {
+                    const glm::vec2 mouseWorldBeforeZoom = (m_mouse - m_offset) / old_zoom;
+                    m_offset = m_mouse - (mouseWorldBeforeZoom * m_zoom);
+                    updateMatrix();
+                }
+                break;
+            }
+
+            case EventType::WindowResize:
+                m_view = glm::uvec2(e.onWResize.width, e.onWResize.height);
+                break;
+
+            case EventType::Key:
+                if (e.onKey.pressed && e.onKey.key == SDL_SCANCODE_ESCAPE) {
+                    getManager().navigate(std::make_unique<MainScreen>(&getManager()));
+                }
+                break;
+
+            default: break;
         }
     }
 
@@ -73,4 +87,11 @@ namespace ktanks {
     glm::vec2 EditorScreen::screenToWorld() const {
         return (m_mouse - m_offset) / m_zoom;
     }
+
+    void EditorScreen::paintTileAtMouse() {
+        const auto w = screenToWorld();
+        const auto i = glm::floor(w / TILE_SIZE);
+        m_terrain_layer.set(i, TerrainSprite::Sand2);
+    }
+
 }

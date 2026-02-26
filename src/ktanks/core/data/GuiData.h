@@ -31,6 +31,7 @@ namespace ktanks {
         AudioOff = 21,
         AudioOn,
         Crosshair,
+        CrosshairPlus,
         Exit,
         Export,
         Gear,

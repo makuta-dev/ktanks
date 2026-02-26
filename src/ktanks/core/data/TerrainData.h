@@ -49,6 +49,8 @@ namespace ktanks {
         TTransitionS,
         TTransitionW,
         TTransitionE,
+
+        COUNT
     };
 
 }

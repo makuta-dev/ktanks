@@ -29,6 +29,8 @@ namespace ktanks {
         void drawSprite(const glm::vec2& pos, const glm::vec2& size, const Region&, float margin);
         void drawText(const std::string& text, const glm::vec2& pos, const glm::vec3& color, const Font& font);
 
+        void drawTile(const glm::vec2& pos, const glm::vec2& size, TerrainSprite);
+
         void drawTank(const Tank&);
         void drawLevel(const Level&);
         void drawTerrain(const LevelMap<TerrainSprite>&);

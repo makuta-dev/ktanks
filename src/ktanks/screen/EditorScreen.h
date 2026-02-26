@@ -2,6 +2,7 @@
 #define KTANKS_EDITORSCREEN_H
 
 #include "ktanks/core/IScreen.h"
+#include "ktanks/core/IWidget.h"
 
 namespace ktanks {
 
@@ -10,6 +11,7 @@ namespace ktanks {
         explicit EditorScreen(const glm::uvec2& level_size, ScreenManager*);
         ~EditorScreen() override;
 
+        void onInit() override;
         void onUpdate(float dt) override;
         void onDraw(Renderer&) override;
         void onEvent(const Event &) override;
@@ -18,11 +20,11 @@ namespace ktanks {
         void updateMatrix();
         glm::vec2 screenToWorld() const;
 
-        bool m_is_move{false};
+        void paintTileAtMouse();
+
         float m_zoom{1.f};
         glm::vec2 m_offset{0.f};
         glm::vec2 m_mouse{0.f};
-        glm::vec2 m_last_mouse{0.f};
         glm::uvec2 m_view{0u};
         LevelMap<TerrainSprite> m_terrain_layer;
         LevelMap<BlockID> m_blocks_layer;

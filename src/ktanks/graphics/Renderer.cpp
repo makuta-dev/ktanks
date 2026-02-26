@@ -172,6 +172,14 @@ namespace ktanks {
         }
     }
 
+    void Renderer::drawTile(const glm::vec2& pos, const glm::vec2& size, const TerrainSprite tile) {
+        const auto m_terrain_atlas = &m_assets.getTextureAtlas(AtlasID::Terrain);
+        setTexture(m_terrain_atlas->getTextureID());
+        if (const auto tile_req = m_terrain_atlas->at(static_cast<std::size_t>(tile))) {
+            drawSprite(pos, size, *tile_req);
+        }
+    }
+
     void Renderer::drawTank(const Tank& t) {
         const auto m_tank_atlas = &m_assets.getTextureAtlas(AtlasID::Tanks);
         const auto color = static_cast<int>(t.getColor());
