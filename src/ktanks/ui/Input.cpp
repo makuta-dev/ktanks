@@ -43,7 +43,7 @@ namespace ktanks {
                 return true;
             }
             if (event.onKey.key == SDL_SCANCODE_RETURN && !m_text.empty()) {
-                if (m_onSubmit) m_onSubmit(m_text);
+                if (m_onSubmit && !m_text.empty()) m_onSubmit(m_text);
                 m_isFocused = false;
                 return true;
             }
@@ -62,9 +62,10 @@ namespace ktanks {
         renderer.drawPatch(getAbsolutePosition(), getSize(), m_isFocused ? GuiSprites::input_square : GuiSprites::input_outline_square, 32);
         renderer.text(displayText,getAbsolutePosition() + text_offset, textColor);
 
-        if (m_isFocused && static_cast<int>(m_cursorBlinkTimer) % 2 == 0) {
+        if (m_isFocused && static_cast<int>(m_cursorBlinkTimer) % 2 == 0 && !m_text.empty()) {
+            const auto m_text_size = renderer.measureText(m_text);
             renderer.text("|",
-                getAbsolutePosition() + text_offset + glm::vec2{text_size.x, 0},
+                getAbsolutePosition() + text_offset + glm::vec2{m_text_size.x, 0},
                 glm::vec3{0.f}
             );
         }
