@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "ktanks/utils/AssetsManager.h"
 #include "ktanks/window/Event.h"
 #include "ktanks/window/Window.h"
 
@@ -22,6 +23,7 @@ namespace ktanks {
         void onEvent(const Event &);
 
         std::shared_ptr<Window> m_window;
+        AssetsManager m_assets;
     };
 
 }

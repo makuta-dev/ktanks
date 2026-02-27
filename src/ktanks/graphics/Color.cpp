@@ -6,18 +6,18 @@ namespace ktanks {
         return static_cast<float>(a) / 255.0f;
     }
 
-    constexpr Color::Color() = default;
+    Color::Color() = default;
 
-    constexpr Color::Color(const float r, const float g, const float b, const float a)
+    Color::Color(const float r, const float g, const float b, const float a)
         : r(r), g(g), b(b), a(a) {}
 
-    constexpr Color::Color(const glm::vec4& v)
+    Color::Color(const glm::vec4& v)
         : r(v.r), g(v.g), b(v.b), a(v.a) {}
 
-    constexpr Color::Color(const glm::vec3& v, const float alpha)
+    Color::Color(const glm::vec3& v, const float alpha)
         : r(v.r), g(v.g), b(v.b), a(alpha) {}
 
-    constexpr Color::Color(const uint8_t r8, const uint8_t g8, const uint8_t b8, const uint8_t a8)
+    Color::Color(const uint8_t r8, const uint8_t g8, const uint8_t b8, const uint8_t a8)
         : r(ft(r8)), g(ft(g8)), b(ft(b8)), a(ft(a8)) {}
 
 }

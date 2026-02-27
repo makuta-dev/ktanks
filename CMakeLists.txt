@@ -77,6 +77,10 @@ add_executable(kTanks
         src/ktanks/window/Window.h
 
         src/main.cpp
+        src/ktanks/utils/Locator.cpp
+        src/ktanks/utils/Locator.h
+        src/ktanks/utils/AssetsManager.cpp
+        src/ktanks/utils/AssetsManager.h
 )
 
 target_include_directories(kTanks PRIVATE src)

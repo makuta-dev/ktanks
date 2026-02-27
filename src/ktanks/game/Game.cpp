@@ -5,6 +5,7 @@
 
 #include "glad/gl.h"
 #include "ktanks/graphics/Color.h"
+#include "ktanks/utils/Locator.h"
 
 namespace ktanks {
 
@@ -15,6 +16,7 @@ namespace ktanks {
     Game::~Game() = default;
 
     void Game::run() {
+        Locator::serve(&m_assets);
         Color a;
         const uint64_t freq = SDL_GetPerformanceFrequency();
         uint64_t last = SDL_GetPerformanceCounter();
