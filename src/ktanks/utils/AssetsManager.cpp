@@ -26,8 +26,19 @@ namespace ktanks {
     template<>
     std::shared_ptr<Shader> AssetsManager::load(const std::string& name) {
         spdlog::info("Loading shader: {}", name);
-        //TODO(loading shaders)
-        return {};
+
+        auto v_path = m_root_path / "shaders" / (name + ".vert");
+        auto f_path = m_root_path / "shaders" / (name + ".frag");
+
+        spdlog::info("Vertex path  : {}", v_path.string());
+        spdlog::info("Fragment path: {}", f_path.string());
+
+        if (!std::filesystem::exists(v_path) || !std::filesystem::exists(f_path)) {
+            spdlog::error("Failed to find shader files for: {}", name);
+            return nullptr;
+        }
+
+        return std::make_shared<Shader>(v_path, f_path);
     }
 
     template<>

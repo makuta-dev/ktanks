@@ -11,6 +11,7 @@ namespace ktanks {
 
     Game::Game() {
         m_window = std::make_shared<Window>("kTanks");
+        m_renderer = std::make_unique<Renderer>();
     }
 
     Game::~Game() = default;
@@ -37,7 +38,9 @@ namespace ktanks {
             last = now;
 
             glClear(GL_COLOR_BUFFER_BIT);
-            onDraw();
+            m_renderer->beginDraw();
+            onDraw(*m_renderer);
+            m_renderer->endDraw();
             m_window->swapBuffers();
         }
     }
@@ -47,15 +50,18 @@ namespace ktanks {
     }
 
     void Game::onUpdate(const float dt) {
-        spdlog::info("Update dt: {}", dt);
+
     }
 
-    void Game::onDraw() {
-
+    void Game::onDraw(Renderer& r) {
+        r.drawRect({100.5f,100.5f},{100.5f,100.5f},{1,0,0,1}, 1.f);
+        r.drawCircle({100.5f,100.5f},25,{0,1,0,1}, 0.f);
     }
 
     void Game::onEvent(const Event& e) {
-
+        if (e.type == EventType::WindowResize) {
+            m_renderer->resize({e.onWResize.width, e.onWResize.height});
+        }
     }
 
 }
