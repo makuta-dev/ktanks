@@ -93,45 +93,6 @@ This project utilizes high-quality open-source assets by **Kenney** and **Steve 
 | [UI Pack](https://kenney.nl/assets/ui-pack)                                 | Interface / HUD | CC0 (Public Domain)    |
 | [Open Sans](https://fonts.google.com/specimen/Open+Sans)                    | Font            | SIL Open Font License  |
 
-## 🗺️ Project Roadmap
-
-### 📦 Phase 1: Engine Foundation
-
-* [x] **Window Context:** Initialize SDL3, GLAD, and the OpenGL 3.3 viewport.
-* [x] **Shader Wrapper:** Create a C++ class to compile, checks and manage Vertex/Fragment shaders in runtime.
-* [x] **Resource Loader:** Implement resource loader class that manages all low-level stuff to make code clean.
-* [x] **Camera 2D:** Set up an Orthographic projection matrix via GLM.
-
-### 🎨 Phase 2: Rendering & Entities
-
-* [x] **Sprite Renderer:** Build a generic system to draw textures with rotation and scaling.
-* [x] **Tank Chassis:** Render and move the base tank using WASD/Arrow keys.
-* [x] **Turret Logic:** Implement independent turret rotation that tracks the mouse cursor.
-* [x] **Layering:** Ensure proper draw order (Tracks < Chassis < Turret).
-
-### 🕹️ Phase 3: Gameplay Systems
-
-* [ ] **Projectile Manager:** Create a system to handle bullet spawning and life-cycles.
-* [ ] **Collision Engine:** Implement AABB (Axis-Aligned Bounding Box) for walls and tanks.
-* [ ] **Level IO:** Create a simple parser to load and save level data from/to files.
-* [ ] **Level Editor:** Simplify creating levels for game, and give ability to players for extending game by themselves
-* [ ] **Basic AI:** Implement stationary enemy turrets that fire at the player.
-
-### 💎 Phase 4: UI & Polishing
-
-* [ ] **HUD:** Integrate Kenney’s UI Pack for health bars and ammo counters.
-* [ ] **Game State:** Implement Main Menu, Playing, and Game Over states.
-* [ ] **SFX:** Add basic audio for movement and explosions.
-* [ ] **Release Build:** Optimize CMake for distribution.
-
----
-
-### 📈 Current Milestone
-
-**Status:** `Phase 3: Gameplay Systems`  
-**Progress:** `[▓░░░░░░░░░] 10%`
-
-<!-- ▓░ -->
 
 ## ⚖️ License & Credits
 
