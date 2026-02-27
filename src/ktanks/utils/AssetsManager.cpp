@@ -43,9 +43,17 @@ namespace ktanks {
 
     template<>
     std::shared_ptr<Texture> AssetsManager::load(const std::string& name) {
+        const auto t_path = m_root_path / "textures" / (name + ".png");
+
         spdlog::info("Loading texture: {}", name);
-        //TODO(loading textures)
-        return {};
+        spdlog::info("Texture path : {}", t_path.string());
+
+        if (!std::filesystem::exists(t_path)) {
+            spdlog::error("Failed to find texture files for: {}", name);
+            return nullptr;
+        }
+
+        return std::make_shared<Texture>(t_path);
     }
 
     template<>
