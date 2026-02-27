@@ -5,7 +5,6 @@
 #include "ktanks/Game.h"
 
 #include "glad/gl.h"
-#include "ktanks/utils/InputManager.h"
 
 using hclock = std::chrono::steady_clock;
 
@@ -13,15 +12,7 @@ int main() {
     auto window = ktanks::Window("kTanks");
     const auto size = window.getSize();
     auto tanks = ktanks::Game();
-    {
-        tanks.onEvent({
-            .type = ktanks::EventType::WindowResize,
-            .onWResize = {
-                .width = size.x,
-                .height = size.y
-            }
-        });
-    }
+    tanks.onEvent(ktanks::resizeEvent(size));
     auto last = hclock::now();
 
     glEnable(GL_BLEND);
@@ -30,12 +21,6 @@ int main() {
     glClearColor(0.f, 0.0f, 0.0f, 1.f);
     tanks.onInit();
     while (window.isRunning()) {
-        if (ktanks::InputManager::needInput()) {
-            SDL_StartTextInput(window.getSDLWindow());
-        } else {
-            SDL_StopTextInput(window.getSDLWindow());
-        }
-
         const auto now = hclock::now();
         const auto dt = std::chrono::duration<float>(now - last).count();
         tanks.onUpdate(dt);

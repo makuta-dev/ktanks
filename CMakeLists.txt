@@ -16,65 +16,6 @@ add_subdirectory(libs/glad)
 add_subdirectory(libs/libspng)
 
 add_executable(kTanks
-        src/ktanks/core/data/BlockData.h
-        src/ktanks/core/data/TankData.h
-        src/ktanks/core/data/TerrainData.h
-        src/ktanks/core/data/GuiData.h
-
-        src/ktanks/core/IScreen.h
-        src/ktanks/core/IWidget.h
-        src/ktanks/core/Constants.h
-        src/ktanks/core/Object.cpp
-        src/ktanks/core/Object.h
-        src/ktanks/core/Entity.cpp
-        src/ktanks/core/Entity.h
-
-        src/ktanks/graphics/Camera.cpp
-        src/ktanks/graphics/Camera.h
-        src/ktanks/graphics/Font.cpp
-        src/ktanks/graphics/Font.h
-        src/ktanks/graphics/Shader.cpp
-        src/ktanks/graphics/Shader.h
-        src/ktanks/graphics/Renderer.cpp
-        src/ktanks/graphics/Renderer.h
-        src/ktanks/graphics/Texture.cpp
-        src/ktanks/graphics/Texture.h
-        src/ktanks/graphics/TextureAtlas.cpp
-        src/ktanks/graphics/TextureAtlas.h
-        src/ktanks/graphics/Vertex.h
-
-        src/ktanks/models/entity/Tank.cpp
-        src/ktanks/models/entity/Tank.h
-        src/ktanks/models/Level.cpp
-        src/ktanks/models/Level.h
-        src/ktanks/models/LevelMap.h
-
-        src/ktanks/screen/EditorScreen.cpp
-        src/ktanks/screen/EditorScreen.h
-        src/ktanks/screen/MainScreen.cpp
-        src/ktanks/screen/MainScreen.h
-        src/ktanks/screen/PlayScreen.cpp
-        src/ktanks/screen/PlayScreen.h
-        src/ktanks/screen/SetupScreen.cpp
-        src/ktanks/screen/SetupScreen.h
-
-        src/ktanks/ui/Button.cpp
-        src/ktanks/ui/Button.h
-        src/ktanks/ui/Container.cpp
-        src/ktanks/ui/Container.h
-        src/ktanks/ui/Label.cpp
-        src/ktanks/ui/Label.h
-        src/ktanks/ui/Input.cpp
-        src/ktanks/ui/Input.h
-        src/ktanks/ui/Image.cpp
-        src/ktanks/ui/Image.h
-        src/ktanks/ui/List.cpp
-        src/ktanks/ui/List.h
-
-        src/ktanks/utils/AssetManager.cpp
-        src/ktanks/utils/AssetManager.h
-        src/ktanks/utils/InputManager.cpp
-        src/ktanks/utils/InputManager.h
 
         src/ktanks/window/Event.h
         src/ktanks/window/Window.cpp
@@ -84,13 +25,6 @@ add_executable(kTanks
         src/ktanks/Game.h
 
         src/main.cpp
-        src/ktanks/ui/editor/TileButton.cpp
-        src/ktanks/ui/editor/TileButton.h
-        src/ktanks/ui/editor/TilePalette.cpp
-        src/ktanks/ui/editor/TilePalette.h
-        src/ktanks/ui/ScrollContainer.cpp
-        src/ktanks/ui/ScrollContainer.h
-
 )
 
 target_include_directories(kTanks PRIVATE src)

@@ -1,6 +1,8 @@
 #ifndef KTANKS_EVENT_H
 #define KTANKS_EVENT_H
 
+#include <glm/vec2.hpp>
+
 namespace ktanks {
 
     enum class EventType {
@@ -64,6 +66,16 @@ namespace ktanks {
             KeyEvent onKey;
         };
     };
+
+    inline Event resizeEvent(const glm::ivec2& size) {
+        return Event{
+            .type = EventType::WindowResize,
+            .onWResize = WindowResizeEvent{
+                .width = size.x,
+                .height = size.y
+            }
+        };
+    }
 
 }
 
