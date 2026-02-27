@@ -10,12 +10,12 @@
 
 namespace ktanks {
 
-    struct Vertex {
+    struct QuadInstance {
         glm::vec2 pos;
-        glm::vec2 uv;
-        glm::vec4 color;
         glm::vec2 size;
+        glm::vec4 color;
         float thickness;
+        float radius;
         int type;
     };
 
@@ -25,23 +25,22 @@ namespace ktanks {
         ~Renderer();
 
         void resize(const glm::ivec2& size);
-
         void beginDraw();
         void flush();
         void endDraw();
 
-        void drawRect(const glm::vec2& pos, const glm::vec2& size, const glm::vec4& color, float w = 0.f);
-        void drawCircle(const glm::vec2& pos, float radius, const glm::vec4& color, float w = 0.f);
-        void drawEllipse(const glm::vec2& pos, const glm::vec2& radius, const glm::vec4& color, float w = 0.f);
+        void drawRect(const glm::vec2& pos, const glm::vec2& size, const glm::vec4& col, float w = 0.0f);
+        void drawCircle(const glm::vec2& pos, float radius, const glm::vec4& col, float w = 0.0f);
+        void drawEllipse(const glm::vec2& pos, const glm::vec2& radius, const glm::vec4& col, float w = 0.0f);
+        void drawRoundedRect(const glm::vec2& pos, const glm::vec2& size, float radius, const glm::vec4& col, float w = 0.0f);
 
     private:
-        void pushQuad(const glm::vec2& p, const glm::vec2& s, const glm::vec4& c, float w, int type);
+        void pushQuad(const glm::vec2& p, const glm::vec2& s, const glm::vec4& c, float w, int type, float r = 0.0f);
 
-        uint32_t m_vao{0}, m_vbo{0}, m_ibo{0};
-        std::vector<Vertex> m_vertexBatch;
-        std::vector<uint32_t> m_indexBatch;
-        std::shared_ptr<Shader> m_shader;
+        uint32_t m_vao{0}, m_vbo_static{0}, m_vbo_instances{0};
         glm::mat4 m_projection{1.f};
+        std::shared_ptr<Shader> m_shader;
+        std::vector<QuadInstance> m_instances;
     };
 
 }

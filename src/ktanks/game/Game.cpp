@@ -56,6 +56,7 @@ namespace ktanks {
     void Game::onDraw(Renderer& r) {
         r.drawRect({100.5f,100.5f},{100.5f,100.5f},{1,0,0,1}, 1.f);
         r.drawCircle({100.5f,100.5f},25,{0,1,0,1}, 0.f);
+        r.drawEllipse({350,150},{75,100},{1,0,1,1});
     }
 
     void Game::onEvent(const Event& e) {
